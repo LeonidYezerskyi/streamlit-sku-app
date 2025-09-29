@@ -1156,6 +1156,93 @@ def create_visual_guide_appendix():
     st.caption("6. **Follow Next Steps** - Execute recommended action plans")
     
     st.markdown("**📊 Remember**: All charts use standardized scales and color-sparing design for print accessibility and reliable visual comparisons.")
+    
+    # New Features Added After Initial Guide
+    st.markdown("---")
+    st.markdown("### 🆕 New Features Guide")
+    st.markdown("*Features added to enhance dashboard functionality*")
+    
+    # Brand vs Owner Toggle
+    st.markdown("#### 🔄 Brand vs Owner Toggle")
+    st.markdown("**Purpose**: Switch between Brand and Owner perspectives without changing layout")
+    
+    st.markdown("**How to Use**:")
+    st.caption("• **Brand View**: Shows brand-level metrics (default)")
+    st.caption("• **Owner View**: Shows owner-level metrics for portfolio analysis")
+    st.caption("• **Toggle Location**: Sidebar under 'Analysis Perspective'")
+    st.caption("• **Effect**: All charts and metrics update automatically")
+    
+    st.markdown("**📊 Worked Example**: Switch to 'Owner View' to see how SKU 4 affects the entire brand owner portfolio, not just the individual brand")
+    
+    # Bookmarking System
+    st.markdown("#### ⭐ Bookmarking System")
+    st.markdown("**Purpose**: Mark SKUs for follow-up and executive review")
+    
+    st.markdown("**How to Use**:")
+    st.caption("• **Star Icon**: Click ☆ to bookmark, ⭐ to remove")
+    st.caption("• **Location**: Top-right of each SKU card")
+    st.caption("• **Sidebar Panel**: View all bookmarked SKUs")
+    st.caption("• **Clear All**: Remove all bookmarks at once")
+    
+    st.markdown("**📊 Worked Example**: Bookmark SKU 4 by clicking the star icon, then check the sidebar to see it in your 'Bookmarked SKUs' list")
+    
+    # Simple Decision Page
+    st.markdown("#### 🎯 Simple Decision Page")
+    st.markdown("**Purpose**: Clear Launch/Pilot/Defer recommendations for executive decision-making")
+    
+    st.markdown("**How to Read**:")
+    st.caption("• **🚀 Launch Now**: High performance, low risk - ready for immediate launch")
+    st.caption("• **🧪 Pilot**: Moderate performance - test in controlled environment first")
+    st.caption("• **⏸️ Defer**: Low performance or high risk - needs optimization")
+    
+    st.markdown("**Decision Criteria**:")
+    st.caption("• **Launch**: IV≥5.0%, Capture≥70.0%, Cannibal≤15.0%, VaR≤5.0%, Confidence≥80/100")
+    st.caption("• **Pilot**: IV≥4.0%, Capture≥65.0%, Cannibal≤20.0%, VaR≤6.0%, Confidence 60-79/100")
+    st.caption("• **Defer**: Any metric below pilot thresholds")
+    
+    st.markdown("**📊 Worked Example**: SKU 4 appears in 'Launch Now' category with score 55.6 and High confidence")
+    
+    # Sticky Navigation
+    st.markdown("#### 📌 Sticky Navigation")
+    st.markdown("**Purpose**: Keep navigation tabs visible while scrolling through long content")
+    
+    st.markdown("**Features**:")
+    st.caption("• **Always Visible**: Tabs stay at top of screen when scrolling")
+    st.caption("• **Compact Design**: Short tab names to fit all 15 sections")
+    st.caption("• **Visual Feedback**: Active tab highlighted with blue border")
+    st.caption("• **Shadow Effect**: Subtle shadow when scrolling for depth")
+    
+    st.markdown("**📊 How to Use**: Navigate between any of the 15 dashboard sections while keeping tabs visible for quick switching")
+    
+    # Navigation Overview
+    st.markdown("#### 🧭 Complete Navigation Guide")
+    st.markdown("**All 15 Dashboard Sections**:")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("**Core Analysis**:")
+        st.caption("📈 Overview - Portfolio leaderboard")
+        st.caption("🗺️ Risk - Risk-return analysis")
+        st.caption("⚠️ Cannibal - Internal impact watch")
+        st.caption("📈 Lift - Category expansion")
+        st.caption("📊 Multiples - Side-by-side comparison")
+    
+    with col2:
+        st.markdown("**Portfolio Tools**:")
+        st.caption("⚖️ Balance - Portfolio distribution")
+        st.caption("🎯 Rivals - Competitive analysis")
+        st.caption("📊 Confidence - Probability meters")
+        st.caption("💰 Cost - Media investment")
+        st.caption("📊 Compact - Space-efficient view")
+    
+    with col3:
+        st.markdown("**Executive & Reference**:")
+        st.caption("📋 Executive - 3-page summary")
+        st.caption("🔍 Details - Complete data view")
+        st.caption("📖 Guide - This help section")
+        st.caption("📋 Reference - Definitions & thresholds")
+        st.caption("🎯 Decision - Launch/Pilot/Defer")
 
 def create_confidence_meter(probability_value):
     """
@@ -3694,6 +3781,59 @@ if not df.empty:
     
     # Use filtered dataframe for all tabs
     df_to_use = filtered_df
+    
+    # Add CSS for sticky navigation and container padding
+    st.markdown("""
+    <style>
+    /* Reduce main container padding from 80px to 60px */
+    .main .block-container {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+    
+    /* Make tabs sticky to the top */
+    .stTabs [data-baseweb="tab-list"] {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: white;
+        border-bottom: 2px solid #e6e6e6;
+        padding: 10px 0;
+        margin-bottom: 20px;
+    }
+    
+    /* Add shadow when scrolling */
+    .stTabs [data-baseweb="tab-list"]::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+    }
+    
+    /* Style individual tabs */
+    .stTabs [data-baseweb="tab"] {
+        background-color: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+        margin-right: 1px;
+        border: 1px solid #e6e6e6;
+        border-bottom: none;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background-color: white;
+        border-bottom: 2px solid #1f77b4;
+        font-weight: bold;
+    }
+    
+    /* Ensure content doesn't overlap with sticky tabs */
+    .stTabs [data-baseweb="tab-panel"] {
+        margin-top: 20px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     
     # Create tabs with shorter names to fit all in one row
     tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13, tab14, tab15 = st.tabs([

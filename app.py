@@ -1160,7 +1160,7 @@ def create_visual_guide_appendix():
     # New Features Added After Initial Guide
     st.markdown("---")
     st.markdown("### 🆕 New Features Guide")
-    st.markdown("*Features added to enhance dashboard functionality*")
+    st.markdown("*Key features added to enhance dashboard functionality*")
     
     # Brand vs Owner Toggle
     st.markdown("#### 🔄 Brand vs Owner Toggle")
@@ -1201,48 +1201,6 @@ def create_visual_guide_appendix():
     st.caption("• **Defer**: Any metric below pilot thresholds")
     
     st.markdown("**📊 Worked Example**: SKU 4 appears in 'Launch Now' category with score 55.6 and High confidence")
-    
-    # Sticky Navigation
-    st.markdown("#### 📌 Sticky Navigation")
-    st.markdown("**Purpose**: Keep navigation tabs visible while scrolling through long content")
-    
-    st.markdown("**Features**:")
-    st.caption("• **Always Visible**: Tabs stay at top of screen when scrolling")
-    st.caption("• **Compact Design**: Short tab names to fit all 15 sections")
-    st.caption("• **Visual Feedback**: Active tab highlighted with blue border")
-    st.caption("• **Shadow Effect**: Subtle shadow when scrolling for depth")
-    
-    st.markdown("**📊 How to Use**: Navigate between any of the 15 dashboard sections while keeping tabs visible for quick switching")
-    
-    # Navigation Overview
-    st.markdown("#### 🧭 Complete Navigation Guide")
-    st.markdown("**All 15 Dashboard Sections**:")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("**Core Analysis**:")
-        st.caption("📈 Overview - Portfolio leaderboard")
-        st.caption("🗺️ Risk - Risk-return analysis")
-        st.caption("⚠️ Cannibal - Internal impact watch")
-        st.caption("📈 Lift - Category expansion")
-        st.caption("📊 Multiples - Side-by-side comparison")
-    
-    with col2:
-        st.markdown("**Portfolio Tools**:")
-        st.caption("⚖️ Balance - Portfolio distribution")
-        st.caption("🎯 Rivals - Competitive analysis")
-        st.caption("📊 Confidence - Probability meters")
-        st.caption("💰 Cost - Media investment")
-        st.caption("📊 Compact - Space-efficient view")
-    
-    with col3:
-        st.markdown("**Executive & Reference**:")
-        st.caption("📋 Executive - 3-page summary")
-        st.caption("🔍 Details - Complete data view")
-        st.caption("📖 Guide - This help section")
-        st.caption("📋 Reference - Definitions & thresholds")
-        st.caption("🎯 Decision - Launch/Pilot/Defer")
 
 def create_confidence_meter(probability_value):
     """
@@ -3781,59 +3739,6 @@ if not df.empty:
     
     # Use filtered dataframe for all tabs
     df_to_use = filtered_df
-    
-    # Add CSS for sticky navigation and container padding
-    st.markdown("""
-    <style>
-    /* Reduce main container padding from 80px to 60px */
-    .main .block-container {
-        padding-left: 60px;
-        padding-right: 60px;
-    }
-    
-    /* Make tabs sticky to the top */
-    .stTabs [data-baseweb="tab-list"] {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: white;
-        border-bottom: 2px solid #e6e6e6;
-        padding: 10px 0;
-        margin-bottom: 20px;
-    }
-    
-    /* Add shadow when scrolling */
-    .stTabs [data-baseweb="tab-list"]::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
-    }
-    
-    /* Style individual tabs */
-    .stTabs [data-baseweb="tab"] {
-        background-color: #f8f9fa;
-        border-radius: 8px 8px 0 0;
-        margin-right: 1px;
-        border: 1px solid #e6e6e6;
-        border-bottom: none;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background-color: white;
-        border-bottom: 2px solid #1f77b4;
-        font-weight: bold;
-    }
-    
-    /* Ensure content doesn't overlap with sticky tabs */
-    .stTabs [data-baseweb="tab-panel"] {
-        margin-top: 20px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
     
     # Create tabs with shorter names to fit all in one row
     tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13, tab14, tab15 = st.tabs([

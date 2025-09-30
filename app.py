@@ -983,33 +983,38 @@ def create_visual_guide_appendix():
     st.markdown("**📊 Worked Example**: SKU 4 gets 'Launch with confidence' at High confidence (95/100) based on strong metrics across all dimensions")
     
     # Key Insights
-    st.markdown("### 💡 Key Insights for CMO")
-    st.markdown("**How to Use This Dashboard**:")
-    st.caption("1. **Start with Portfolio Overview** - Get big picture of all SKUs")
-    st.caption("2. **Use Risk Map** - Identify high-potential, low-risk opportunities")
-    st.caption("3. **Check Cannibalization Watch** - Monitor internal portfolio impact")
-    st.caption("4. **Review Category Lift** - Understand true expansion potential")
-    st.caption("5. **Use Small Multiples** - Compare SKUs side-by-side")
-    st.caption("6. **Follow Next Steps** - Execute recommended action plans")
+    st.markdown("### 💡 How to Use This Dashboard")
+    st.markdown("**Recommended Workflow**:")
+    st.caption("1. **Start with Overview Tab** - Get big picture of all SKUs with dual perspectives")
+    st.caption("2. **Use Filters** - Focus on specific performance tiers, risk levels, or launch readiness")
+    st.caption("3. **Check Risk Map** - Identify high-potential, low-risk opportunities")
+    st.caption("4. **Review Cannibalization Watch** - Monitor internal portfolio impact")
+    st.caption("5. **Check Category Lift** - Understand true expansion potential")
+    st.caption("6. **Use Small Multiples** - Compare SKUs side-by-side")
+    st.caption("7. **Check Decision Tab** - Get clear Launch/Pilot/Defer recommendations")
+    
+    # Filter Behavior Note
+    st.markdown("### ⚠️ Filter Behavior Note")
+    st.markdown("**Important**: When you use any filter for the first time, the dashboard will jump to the first tab. After that, changing filter values will keep you on your current tab. This is a platform limitation and doesn't affect the data or functionality.")
     
     st.markdown("**📊 Remember**: All charts use standardized scales and color-sparing design for print accessibility and reliable visual comparisons.")
     
-    # New Features Added After Initial Guide
+    # Current Dashboard Features
     st.markdown("---")
-    st.markdown("### 🆕 New Features Guide")
-    st.markdown("*Key features added to enhance dashboard functionality*")
+    st.markdown("### 🆕 Current Dashboard Features")
+    st.markdown("*Key features and recent updates to the dashboard*")
     
-    # Brand vs Owner Toggle
-    st.markdown("#### 🔄 Brand vs Owner Toggle")
-    st.markdown("**Purpose**: Switch between Brand and Owner perspectives without changing layout")
+    # SKU Level Analysis
+    st.markdown("#### 📊 SKU Level Analysis")
+    st.markdown("**Purpose**: Shows both Brand and Owner perspectives simultaneously for each SKU")
     
-    st.markdown("**How to Use**:")
-    st.caption("• **Brand View**: Shows brand-level metrics (default)")
-    st.caption("• **Owner View**: Shows owner-level metrics for portfolio analysis")
-    st.caption("• **Toggle Location**: Sidebar under 'Analysis Perspective'")
-    st.caption("• **Effect**: All charts and metrics update automatically")
+    st.markdown("**How it Works**:")
+    st.caption("• **Dual Perspective**: Each metric shows both Brand and Owner values")
+    st.caption("• **Format**: '📊 Brand: X% | 🏢 Owner: Y%'")
+    st.caption("• **Location**: All SKU detail views in Overview tab")
+    st.caption("• **Benefit**: Complete picture without switching perspectives")
     
-    st.markdown("**📊 Worked Example**: Switch to 'Owner View' to see how SKU 4 affects the entire brand owner portfolio, not just the individual brand")
+    st.markdown("**📊 Worked Example**: IV shows '📊 Brand: 4.8% | 🏢 Owner: 3.4%' - you see both perspectives at once")
     
     # Bookmarking System
     st.markdown("#### ⭐ Bookmarking System")
@@ -1038,6 +1043,22 @@ def create_visual_guide_appendix():
     st.caption("• **Defer**: Any metric below pilot thresholds")
     
     st.markdown("**📊 Worked Example**: SKU 4 appears in 'Launch Now' category with score 55.6 and High confidence")
+    
+    # Available Tabs
+    st.markdown("#### 📋 Available Tabs")
+    st.markdown("**Current Dashboard Structure**:")
+    st.caption("• **How to use the dashboard** - This guide")
+    st.caption("• **📈 Overview** - Portfolio leaderboard with dual perspectives")
+    st.caption("• **🗺️ Risk** - Portfolio risk map and analysis")
+    st.caption("• **⚠️ Cannibal** - Cannibalization watchlist")
+    st.caption("• **📈 Lift** - Category lift analysis")
+    st.caption("• **📊 Multiples** - Small multiples comparison")
+    st.caption("• **🎯 Rivals** - Competitive analysis")
+    st.caption("• **📊 Compact** - Space-efficient view")
+    st.caption("• **📋 Executive** - Executive booklet (3 pages)")
+    st.caption("• **🔍 Details** - Complete data view")
+    st.caption("• **📋 Reference** - Definitions and thresholds")
+    st.caption("• **🎯 Decision** - Launch/Pilot/Defer recommendations")
 
 def create_confidence_meter(probability_value):
     """

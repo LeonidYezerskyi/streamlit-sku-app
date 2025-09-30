@@ -590,7 +590,6 @@ def create_top5_launch_callout(df):
             
             st.caption(f"Confidence: {confidence}")
     
-    st.info("💡 Click on any SKU below to view detailed analysis and launch strategy")
 
 def create_portfolio_risk_map(df):
     """
@@ -850,169 +849,7 @@ def create_what_could_change_box(row):
     for factor in sensitivity_factors:
         st.caption(factor)
     
-    # Add specific recommendations
-    st.markdown("**💡 Recommendations:**")
-    if high_sensitivity_count >= 3:
-        st.caption("• Monitor price elasticity closely during launch")
-        st.caption("• Test pack formats in pilot markets")
-        st.caption("• Develop contingency plans for market changes")
-        st.caption("• Consider phased rollout to manage risk")
-    elif high_sensitivity_count >= 2:
-        st.caption("• Monitor key sensitivity factors")
-        st.caption("• Prepare for potential market adjustments")
-        st.caption("• Consider A/B testing for optimization")
-    else:
-        st.caption("• Relatively stable launch profile")
-        st.caption("• Focus on execution excellence")
-        st.caption("• Monitor for unexpected market shifts")
 
-def create_next_steps_footer(row):
-    """
-    Create a 'next steps' footer for each SKU with test plan, pricing bands, and retail targets
-    """
-    st.markdown("---")
-    st.markdown("### 🎯 Next Steps & Action Plan")
-    
-    # Determine launch readiness and create appropriate next steps
-    recommendation, confidence, confidence_score, rec_color = get_action_recommendation(row)
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("**🧪 Test Plan**")
-        
-        if rec_color == "success":
-            # Ready to launch
-            st.success("**Full Launch Ready**")
-            st.caption("• **Phase 1**: National rollout")
-            st.caption("• **Timeline**: 0-3 months")
-            st.caption("• **Test Markets**: Top 5 cities")
-            st.caption("• **Success Metrics**: IV > 5%, Capture > 70%")
-            st.caption("• **Risk Level**: Low - proceed with confidence")
-            
-        elif rec_color == "warning":
-            # Pilot recommended
-            st.warning("**Pilot Testing Required**")
-            st.caption("• **Phase 1**: Pilot in 2-3 markets")
-            st.caption("• **Timeline**: 3-6 months")
-            st.caption("• **Test Markets**: Mid-tier cities")
-            st.caption("• **Success Metrics**: IV > 4%, Capture > 65%")
-            st.caption("• **Risk Level**: Medium - monitor closely")
-            
-        else:
-            # Defer launch
-            st.error("**Defer Launch**")
-            st.caption("• **Phase 1**: Concept refinement")
-            st.caption("• **Timeline**: 6-12 months")
-            st.caption("• **Test Markets**: Limited test")
-            st.caption("• **Success Metrics**: IV > 3%, Capture > 60%")
-            st.caption("• **Risk Level**: High - needs optimization")
-    
-    with col2:
-        st.markdown("**💰 Pricing Strategy**")
-        
-        # Pricing bands based on IV and risk
-        if row['Brand_IV'] >= 6.0:
-            st.success("**Premium Pricing**")
-            st.caption("• **Target Price**: +15-25% vs category")
-            st.caption("• **Price Bands**: $X.XX - $X.XX")
-            st.caption("• **Strategy**: Value-based pricing")
-            st.caption("• **Elasticity**: Low - price stable")
-            st.caption("• **Promotions**: Minimal discounting")
-            
-        elif row['Brand_IV'] >= 4.0:
-            st.info("**Competitive Pricing**")
-            st.caption("• **Target Price**: ±5% vs category")
-            st.caption("• **Price Bands**: $X.XX - $X.XX")
-            st.caption("• **Strategy**: Market penetration")
-            st.caption("• **Elasticity**: Moderate - monitor price")
-            st.caption("• **Promotions**: Strategic discounting")
-            
-        else:
-            st.warning("**Value Pricing**")
-            st.caption("• **Target Price**: -10-15% vs category")
-            st.caption("• **Price Bands**: $X.XX - $X.XX")
-            st.caption("• **Strategy**: Volume-driven")
-            st.caption("• **Elasticity**: High - price sensitive")
-            st.caption("• **Promotions**: Regular discounting")
-    
-    with col3:
-        st.markdown("**🏪 Retail Targets**")
-        
-        # Retail targets based on capture efficiency and category lift
-        if row['Brand_Capture_Eff'] >= 80 and row['Brand_Category_Lift'] >= 5:
-            st.success("**Premium Retailers**")
-            st.caption("• **Primary**: Whole Foods, Target, Walmart")
-            st.caption("• **Secondary**: Regional chains")
-            st.caption("• **Distribution**: 80%+ ACV")
-            st.caption("• **Shelf Position**: Eye-level")
-            st.caption("• **Support**: Full marketing support")
-            
-        elif row['Brand_Capture_Eff'] >= 70:
-            st.info("**Mainstream Retailers**")
-            st.caption("• **Primary**: Target, Walmart, Kroger")
-            st.caption("• **Secondary**: Regional chains")
-            st.caption("• **Distribution**: 60-80% ACV")
-            st.caption("• **Shelf Position**: Category standard")
-            st.caption("• **Support**: Standard support")
-            
-        else:
-            st.warning("**Selective Distribution**")
-            st.caption("• **Primary**: Regional chains")
-            st.caption("• **Secondary**: Independent stores")
-            st.caption("• **Distribution**: 40-60% ACV")
-            st.caption("• **Shelf Position**: Endcap/feature")
-            st.caption("• **Support**: Limited support")
-    
-    # Add timeline and milestones
-    st.markdown("---")
-    st.markdown("**📅 Key Milestones & Timeline**")
-    
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("**Month 1-2**")
-        if rec_color == "success":
-            st.caption("• Finalize pricing")
-            st.caption("• Secure retail partnerships")
-            st.caption("• Launch marketing campaign")
-        else:
-            st.caption("• Complete pilot analysis")
-            st.caption("• Refine positioning")
-            st.caption("• Prepare for next phase")
-    
-    with col2:
-        st.markdown("**Month 3-4**")
-        if rec_color == "success":
-            st.caption("• National distribution")
-            st.caption("• Monitor performance")
-            st.caption("• Optimize based on data")
-        else:
-            st.caption("• Pilot market launch")
-            st.caption("• Collect performance data")
-            st.caption("• Analyze results")
-    
-    with col3:
-        st.markdown("**Month 5-6**")
-        if rec_color == "success":
-            st.caption("• Scale successful markets")
-            st.caption("• Expand distribution")
-            st.caption("• Plan line extensions")
-        else:
-            st.caption("• Evaluate pilot results")
-            st.caption("• Decide on full launch")
-            st.caption("• Prepare expansion")
-    
-    with col4:
-        st.markdown("**Month 7-12**")
-        if rec_color == "success":
-            st.caption("• Full market penetration")
-            st.caption("• Innovation pipeline")
-            st.caption("• Category leadership")
-        else:
-            st.caption("• Full launch (if approved)")
-            st.caption("• Monitor performance")
-            st.caption("• Optimize strategy")
 
 def create_visual_guide_appendix():
     """
@@ -1289,6 +1126,14 @@ def create_executive_booklet(df):
     elif "Page 3" in page:
         create_executive_page3_top5(df)
 
+def get_ordinal_suffix(num):
+    """Convert number to ordinal (1st, 2nd, 3rd, 4th, etc.)"""
+    if 10 <= num % 100 <= 20:
+        suffix = 'th'
+    else:
+        suffix = {1: 'st', 2: 'nd', 3: 'rd'}.get(num % 10, 'th')
+    return f"{num}{suffix}"
+
 def create_sku_ranking_footer(sku_row, df):
     """
     Create a page footer showing where this SKU ranks on each metric within the portfolio
@@ -1370,7 +1215,7 @@ def create_sku_ranking_footer(sku_row, df):
             rank_emoji = "📉"
             rank_color = "error"
         
-        st.markdown(f"**Incremental Value**: {rank_emoji} Rank #{rank_data['rank']} ({rank_data['percentile']:.0f}th percentile)")
+        st.markdown(f"**Incremental Value**: {rank_emoji} Rank #{rank_data['rank']} ({get_ordinal_suffix(int(rank_data['percentile']))} percentile)")
         st.caption(f"Value: {rank_data['value']:.1f}% | {rank_data['better'].title()} is better")
         
         # Composite Score
@@ -1388,7 +1233,7 @@ def create_sku_ranking_footer(sku_row, df):
             rank_emoji = "📉"
             rank_color = "error"
         
-        st.markdown(f"**Composite Score**: {rank_emoji} Rank #{rank_data['rank']} ({rank_data['percentile']:.0f}th percentile)")
+        st.markdown(f"**Composite Score**: {rank_emoji} Rank #{rank_data['rank']} ({get_ordinal_suffix(int(rank_data['percentile']))} percentile)")
         st.caption(f"Score: {rank_data['value']:.1f} | {rank_data['better'].title()} is better")
     
     with col2:
@@ -1405,7 +1250,7 @@ def create_sku_ranking_footer(sku_row, df):
         else:
             rank_emoji = "📉"
         
-        st.markdown(f"**Capture Efficiency**: {rank_emoji} Rank #{rank_data['rank']} ({rank_data['percentile']:.0f}th percentile)")
+        st.markdown(f"**Capture Efficiency**: {rank_emoji} Rank #{rank_data['rank']} ({get_ordinal_suffix(int(rank_data['percentile']))} percentile)")
         st.caption(f"Efficiency: {rank_data['value']:.1f}% | {rank_data['better'].title()} is better")
         
         # Category Lift
@@ -1419,7 +1264,7 @@ def create_sku_ranking_footer(sku_row, df):
         else:
             rank_emoji = "📉"
         
-        st.markdown(f"**Category Lift**: {rank_emoji} Rank #{rank_data['rank']} ({rank_data['percentile']:.0f}th percentile)")
+        st.markdown(f"**Category Lift**: {rank_emoji} Rank #{rank_data['rank']} ({get_ordinal_suffix(int(rank_data['percentile']))} percentile)")
         st.caption(f"Lift: {rank_data['value']:.1f}% | {rank_data['better'].title()} is better")
     
     with col3:
@@ -1436,7 +1281,7 @@ def create_sku_ranking_footer(sku_row, df):
         else:
             rank_emoji = "📉"
         
-        st.markdown(f"**Cannibalization**: {rank_emoji} Rank #{rank_data['rank']} ({rank_data['percentile']:.0f}th percentile)")
+        st.markdown(f"**Cannibalization**: {rank_emoji} Rank #{rank_data['rank']} ({get_ordinal_suffix(int(rank_data['percentile']))} percentile)")
         st.caption(f"Ratio: {rank_data['value']:.1f}% | {rank_data['better'].title()} is better")
         
         # VaR10
@@ -1450,7 +1295,7 @@ def create_sku_ranking_footer(sku_row, df):
         else:
             rank_emoji = "📉"
         
-        st.markdown(f"**VaR10**: {rank_emoji} Rank #{rank_data['rank']} ({rank_data['percentile']:.0f}th percentile)")
+        st.markdown(f"**VaR10**: {rank_emoji} Rank #{rank_data['rank']} ({get_ordinal_suffix(int(rank_data['percentile']))} percentile)")
         st.caption(f"VaR: {rank_data['value']:.1f}% | {rank_data['better'].title()} is better")
     
     with col4:
@@ -1467,7 +1312,7 @@ def create_sku_ranking_footer(sku_row, df):
         else:
             rank_emoji = "📉"
         
-        st.markdown(f"**Confidence**: {rank_emoji} Rank #{rank_data['rank']} ({rank_data['percentile']:.0f}th percentile)")
+        st.markdown(f"**Confidence**: {rank_emoji} Rank #{rank_data['rank']} ({get_ordinal_suffix(int(rank_data['percentile']))} percentile)")
         st.caption(f"Probability: {rank_data['value']:.1f}% | {rank_data['better'].title()} is better")
         
         # Market HHI
@@ -1481,7 +1326,7 @@ def create_sku_ranking_footer(sku_row, df):
         else:
             rank_emoji = "📉"
         
-        st.markdown(f"**Market HHI**: {rank_emoji} Rank #{rank_data['rank']} ({rank_data['percentile']:.0f}th percentile)")
+        st.markdown(f"**Market HHI**: {rank_emoji} Rank #{rank_data['rank']} ({get_ordinal_suffix(int(rank_data['percentile']))} percentile)")
         st.caption(f"HHI: {rank_data['value']:.2f}% | {rank_data['better'].title()} is better")
     
     # Overall portfolio position summary
@@ -1499,23 +1344,23 @@ def create_sku_ranking_footer(sku_row, df):
     
     with col1:
         if avg_performance_percentile >= 80:
-            st.success(f"🎯 **Performance**: Top Tier ({avg_performance_percentile:.0f}th percentile)")
+            st.success(f"🎯 **Performance**: Top Tier ({get_ordinal_suffix(int(avg_performance_percentile))} percentile)")
         elif avg_performance_percentile >= 60:
-            st.info(f"📈 **Performance**: Above Average ({avg_performance_percentile:.0f}th percentile)")
+            st.info(f"📈 **Performance**: Above Average ({get_ordinal_suffix(int(avg_performance_percentile))} percentile)")
         elif avg_performance_percentile >= 40:
-            st.warning(f"📊 **Performance**: Average ({avg_performance_percentile:.0f}th percentile)")
+            st.warning(f"📊 **Performance**: Average ({get_ordinal_suffix(int(avg_performance_percentile))} percentile)")
         else:
-            st.error(f"📉 **Performance**: Below Average ({avg_performance_percentile:.0f}th percentile)")
+            st.error(f"📉 **Performance**: Below Average ({get_ordinal_suffix(int(avg_performance_percentile))} percentile)")
     
     with col2:
         if avg_risk_percentile >= 80:
-            st.success(f"🛡️ **Risk Profile**: Low Risk ({avg_risk_percentile:.0f}th percentile)")
+            st.success(f"🛡️ **Risk Profile**: Low Risk ({get_ordinal_suffix(int(avg_risk_percentile))} percentile)")
         elif avg_risk_percentile >= 60:
-            st.info(f"⚖️ **Risk Profile**: Moderate Risk ({avg_risk_percentile:.0f}th percentile)")
+            st.info(f"⚖️ **Risk Profile**: Moderate Risk ({get_ordinal_suffix(int(avg_risk_percentile))} percentile)")
         elif avg_risk_percentile >= 40:
-            st.warning(f"⚠️ **Risk Profile**: Higher Risk ({avg_risk_percentile:.0f}th percentile)")
+            st.warning(f"⚠️ **Risk Profile**: Higher Risk ({get_ordinal_suffix(int(avg_risk_percentile))} percentile)")
         else:
-            st.error(f"🚨 **Risk Profile**: High Risk ({avg_risk_percentile:.0f}th percentile)")
+            st.error(f"🚨 **Risk Profile**: High Risk ({get_ordinal_suffix(int(avg_risk_percentile))} percentile)")
     
     with col3:
         # Calculate overall rank
@@ -1576,6 +1421,42 @@ def get_perspective_label():
     """
     perspective = st.session_state.get('perspective', 'Brand')
     return f"({perspective} View)"
+
+def get_dual_metric_display(metric_base_name, row):
+    """
+    Get both Brand and Owner metric values for dual perspective display
+    """
+    metric_mapping = {
+        'IV': ('Brand_IV', 'Owner_IV'),
+        'IV_Prob': ('Brand_IV_Prob', 'Owner_IV_Prob'),
+        'VaR10': ('Brand_VaR10', 'Owner_VaR10'),
+        'Capture_Eff': ('Brand_Capture_Eff', 'Owner_Capture_Eff'),
+        'Cannibal_Ratio': ('Brand_Cannibal_Ratio', 'Owner_Cannibal_Ratio'),
+        'Category_Lift': ('Brand_Category_Lift', 'Owner_Category_Lift')
+    }
+    
+    if metric_base_name in metric_mapping:
+        brand_col, owner_col = metric_mapping[metric_base_name]
+        return row[brand_col], row[owner_col]
+    else:
+        return row.get(metric_base_name, 0), row.get(metric_base_name, 0)
+
+def create_dual_metric_display(metric_base_name, row, max_value=None, reverse=False):
+    """
+    Create a dual perspective display showing both Brand and Owner metrics
+    """
+    brand_value, owner_value = get_dual_metric_display(metric_base_name, row)
+    
+    # Create display with both values
+    display_text = f"📊 **Brand**: {brand_value:.1f}% | 🏢 **Owner**: {owner_value:.1f}%"
+    
+    # Add visual bars for both
+    if max_value:
+        brand_bar = create_in_cell_bar(brand_value, max_value, 8, reverse)
+        owner_bar = create_in_cell_bar(owner_value, max_value, 8, reverse)
+        display_text += f"\n📊 Brand: {brand_bar}\n🏢 Owner: {owner_bar}"
+    
+    return display_text
 
 def get_plain_english_headline(metric_name, value, context=""):
     """
@@ -1805,7 +1686,6 @@ def create_executive_page1_leaderboard(df):
     
     # Navigation
     st.markdown("---")
-    st.info("📄 **Navigation**: Use the page selector above to navigate between pages, or return to the full dashboard using the tabs.")
 
 def create_executive_page2_risk_map(df):
     """
@@ -1923,7 +1803,6 @@ def create_executive_page2_risk_map(df):
     
     # Navigation
     st.markdown("---")
-    st.info("📄 **Navigation**: Use the page selector above to navigate between pages, or return to the full dashboard using the tabs.")
 
 def create_executive_page3_top5(df):
     """
@@ -2026,288 +1905,8 @@ def create_executive_page3_top5(df):
     
     # Navigation
     st.markdown("---")
-    st.info("📄 **Navigation**: Use the page selector above to navigate between pages, or return to the full dashboard using the tabs.")
 
-def create_cost_to_win_placeholder(df):
-    """
-    Create a cost-to-win placeholder that can later combine media needs with expected share gain
-    """
-    st.markdown("### 💰 Cost-to-Win Analysis")
-    st.markdown("*Media investment requirements vs expected share gain*")
-    
-    # Placeholder structure for future cost-to-win analysis
-    st.info("🚧 **Under Development**: This section will combine media investment needs with expected share gain to calculate cost-to-win metrics.")
-    
-    # Current placeholder metrics based on available data
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        total_iv = df['Brand_IV'].sum()
-        st.metric("💰 Total Expected IV", f"{total_iv:.1f}%")
-        st.caption("Sum of all SKU incremental values")
-    
-    with col2:
-        avg_iv = df['Brand_IV'].mean()
-        st.metric("📊 Average IV per SKU", f"{avg_iv:.1f}%")
-        st.caption("Portfolio average incremental value")
-    
-    with col3:
-        high_iv_skus = len(df[df['Brand_IV'] >= 5.0])
-        st.metric("🎯 High IV SKUs", high_iv_skus)
-        st.caption("SKUs with ≥5% incremental value")
-    
-    with col4:
-        total_skus = len(df)
-        st.metric("📈 Portfolio Size", total_skus)
-        st.caption("Total SKUs in analysis")
-    
-    # Placeholder for media investment framework
-    st.markdown("#### 🎯 Media Investment Framework (Placeholder)")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("**📺 Planned Media Channels**")
-        st.caption("• Digital Display - TBD budget allocation")
-        st.caption("• Social Media - TBD budget allocation")
-        st.caption("• TV/Video - TBD budget allocation")
-        st.caption("• Print/Outdoor - TBD budget allocation")
-        st.caption("• Retail Activation - TBD budget allocation")
-        
-        st.markdown("**🎯 Target Metrics**")
-        st.caption("• Reach: TBD % of target audience")
-        st.caption("• Frequency: TBD average frequency")
-        st.caption("• Share of Voice: TBD % vs competitors")
-        st.caption("• Cost per Point: TBD efficiency metric")
-    
-    with col2:
-        st.markdown("**💰 Investment Requirements**")
-        st.caption("• Launch Phase: TBD budget")
-        st.caption("• Sustain Phase: TBD budget")
-        st.caption("• Peak Season: TBD budget")
-        st.caption("• Total Investment: TBD budget")
-        
-        st.markdown("**📊 Expected Returns**")
-        st.caption("• Share Gain: Based on IV projections")
-        st.caption("• Revenue Impact: TBD calculation")
-        st.caption("• ROI: TBD return on investment")
-        st.caption("• Payback Period: TBD months")
-    
-    # SKU-level cost-to-win placeholder
-    st.markdown("#### 📊 SKU-Level Cost-to-Win Analysis (Placeholder)")
-    
-    # Create a table showing current IV data as foundation for cost-to-win
-    cost_to_win_data = []
-    for _, row in df.iterrows():
-        cost_to_win_data.append({
-            'SKU': row['SKU'],
-            'Expected IV': f"{row['Brand_IV']:.1f}%",
-            'Confidence': f"{row['Brand_IV_Prob']:.1f}%",
-            'Media Budget': "TBD",
-            'Cost per IV Point': "TBD",
-            'Expected ROI': "TBD",
-            'Priority': "High" if row['Brand_IV'] >= 5.0 else "Medium" if row['Brand_IV'] >= 3.0 else "Low"
-        })
-    
-    # Display as a simple table
-    st.markdown("**Current Foundation Data (Media calculations pending):**")
-    
-    for data in cost_to_win_data:
-        col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
-        with col1:
-            st.markdown(f"**{data['SKU']}**")
-        with col2:
-            st.caption(f"IV: {data['Expected IV']}")
-        with col3:
-            st.caption(f"Conf: {data['Confidence']}")
-        with col4:
-            st.caption(f"Budget: {data['Media Budget']}")
-        with col5:
-            st.caption(f"Cost/Point: {data['Cost per IV Point']}")
-        with col6:
-            st.caption(f"ROI: {data['Expected ROI']}")
-        with col7:
-            if data['Priority'] == "High":
-                st.caption("🔴 High")
-            elif data['Priority'] == "Medium":
-                st.caption("🟡 Medium")
-            else:
-                st.caption("🟢 Low")
-    
-    # Future integration points
-    st.markdown("#### 🔮 Future Integration Points")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("**📊 Data Integration**")
-        st.caption("• Media planning tools")
-        st.caption("• Budget allocation systems")
-        st.caption("• Market research data")
-        st.caption("• Competitive intelligence")
-    
-    with col2:
-        st.markdown("**🎯 Calculations**")
-        st.caption("• Cost per incremental point")
-        st.caption("• Media efficiency ratios")
-        st.caption("• Share gain projections")
-        st.caption("• ROI optimization")
-    
-    with col3:
-        st.markdown("**📈 Outputs**")
-        st.caption("• Investment recommendations")
-        st.caption("• Budget allocation by SKU")
-        st.caption("• Media mix optimization")
-        st.caption("• Performance tracking")
-    
-    # Development roadmap
-    st.markdown("#### 🛣️ Development Roadmap")
-    
-    st.markdown("**Phase 1: Foundation (Current)**")
-    st.caption("✅ SKU incremental value data")
-    st.caption("✅ Confidence levels")
-    st.caption("✅ Portfolio prioritization")
-    
-    st.markdown("**Phase 2: Media Integration (Next)**")
-    st.caption("🔄 Media budget data input")
-    st.caption("🔄 Channel performance metrics")
-    st.caption("🔄 Cost per point calculations")
-    
-    st.markdown("**Phase 3: Optimization (Future)**")
-    st.caption("⏳ ROI optimization algorithms")
-    st.caption("⏳ Budget allocation recommendations")
-    st.caption("⏳ Performance tracking dashboard")
-    
-    # Assumption note
-    st.caption("📝 **Assumption**: Cost-to-win analysis will integrate media investment data with incremental value projections to optimize marketing spend efficiency. Current placeholder shows foundation data structure.")
 
-def create_confidence_meter_widget(df):
-    """
-    Create a comprehensive confidence meter widget for all SKUs
-    """
-    # Check if dataframe is empty
-    if df.empty:
-        st.warning("⚠️ No SKUs available for confidence meter analysis")
-        return
-    
-    st.markdown("### 📊 Confidence Meter Analysis")
-    st.markdown("*Probability IV>0 mapped to clear confidence labels*")
-    
-    # Calculate confidence distribution
-    confidence_distribution = {
-        "Very High": len(df[df['Brand_IV_Prob'] >= 95]),
-        "High": len(df[(df['Brand_IV_Prob'] >= 90) & (df['Brand_IV_Prob'] < 95)]),
-        "Good": len(df[(df['Brand_IV_Prob'] >= 85) & (df['Brand_IV_Prob'] < 90)]),
-        "Moderate": len(df[(df['Brand_IV_Prob'] >= 80) & (df['Brand_IV_Prob'] < 85)]),
-        "Low": len(df[(df['Brand_IV_Prob'] >= 70) & (df['Brand_IV_Prob'] < 80)]),
-        "Very Low": len(df[df['Brand_IV_Prob'] < 70])
-    }
-    
-    # Portfolio confidence summary
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        high_confidence = confidence_distribution["Very High"] + confidence_distribution["High"] + confidence_distribution["Good"]
-        if len(df) > 0:
-            st.metric("🟢 High Confidence", high_confidence, delta=f"{high_confidence/len(df)*100:.0f}%")
-        else:
-            st.metric("🟢 High Confidence", 0)
-        st.caption("≥85% probability")
-    
-    with col2:
-        moderate_confidence = confidence_distribution["Moderate"]
-        if len(df) > 0:
-            st.metric("🟡 Moderate Confidence", moderate_confidence, delta=f"{moderate_confidence/len(df)*100:.0f}%")
-        else:
-            st.metric("🟡 Moderate Confidence", 0)
-        st.caption("80-84% probability")
-    
-    with col3:
-        low_confidence = confidence_distribution["Low"] + confidence_distribution["Very Low"]
-        if len(df) > 0:
-            st.metric("🔴 Low Confidence", low_confidence, delta=f"{low_confidence/len(df)*100:.0f}%")
-        else:
-            st.metric("🔴 Low Confidence", 0)
-        st.caption("<80% probability")
-    
-    with col4:
-        if len(df) > 0:
-            avg_confidence = df['Brand_IV_Prob'].mean()
-            st.metric("📊 Avg Confidence", f"{avg_confidence:.1f}%")
-        else:
-            st.metric("📊 Avg Confidence", "N/A")
-        st.caption("Portfolio average")
-    
-    # Create confidence distribution chart
-    st.markdown("#### 📈 Confidence Distribution")
-    
-    fig = go.Figure(data=[
-        go.Bar(
-            x=list(confidence_distribution.keys()),
-            y=list(confidence_distribution.values()),
-            marker=dict(
-                color=['#2E8B57', '#32CD32', '#90EE90', '#FFD700', '#FFA500', '#FF6347'],
-                line=dict(color='black', width=1)
-            ),
-            text=list(confidence_distribution.values()),
-            textposition='auto',
-        )
-    ])
-    
-    fig.update_layout(
-        title="SKU Confidence Distribution",
-        xaxis_title="Confidence Level",
-        yaxis_title="Number of SKUs",
-        height=400,
-        plot_bgcolor='white'
-    )
-    
-    st.plotly_chart(fig, use_container_width=True)
-    
-    # Individual SKU confidence meters
-    st.markdown("#### 🎯 Individual SKU Confidence Meters")
-    
-    # Sort by confidence (highest first)
-    sorted_df = df.sort_values('Brand_IV_Prob', ascending=False)
-    
-    for idx, row in sorted_df.iterrows():
-        with st.expander(f"📊 {row['SKU']} - {row['Brand_IV_Prob']:.1f}% Probability"):
-            create_confidence_meter(row['Brand_IV_Prob'])
-            
-            # Additional context
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                st.metric("Brand IV", f"{row['Brand_IV']:.1f}%")
-            with col2:
-                st.metric("Capture Efficiency", f"{row['Brand_Capture_Eff']:.1f}%")
-            with col3:
-                st.metric("VaR10", f"{row['Brand_VaR10']:.1f}%")
-    
-    # Confidence insights
-    st.markdown("#### 💡 Confidence Insights")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("**🎯 High Confidence SKUs**")
-        high_conf_skus = df[df['Brand_IV_Prob'] >= 85]
-        if len(high_conf_skus) > 0:
-            for _, sku in high_conf_skus.iterrows():
-                st.caption(f"• {sku['SKU']}: {sku['Brand_IV_Prob']:.1f}% confidence")
-        else:
-            st.caption("No high confidence SKUs found")
-    
-    with col2:
-        st.markdown("**⚠️ Low Confidence SKUs**")
-        low_conf_skus = df[df['Brand_IV_Prob'] < 80]
-        if len(low_conf_skus) > 0:
-            for _, sku in low_conf_skus.iterrows():
-                st.caption(f"• {sku['SKU']}: {sku['Brand_IV_Prob']:.1f}% confidence")
-        else:
-            st.caption("No low confidence SKUs found")
-    
-    # Assumption note
-    st.caption("📝 **Assumption**: Confidence levels based on statistical modeling of incremental value probability. Higher confidence indicates greater certainty in positive incremental value.")
 
 def create_closest_rivals_widget(df):
     """
@@ -2487,161 +2086,6 @@ def create_closest_rivals_widget(df):
     else:
         st.warning("⚠️ No competitor data available for analysis")
 
-def create_portfolio_balance_widget(df):
-    """
-    Create a portfolio balance widget showing share gain distribution across brands within the owner
-    """
-    # Check if dataframe is empty
-    if df.empty:
-        st.warning("⚠️ No SKUs available for portfolio balance analysis")
-        return
-    
-    st.markdown("### ⚖️ Portfolio Balance Analysis")
-    st.markdown("*Share gain distribution across brands within the owner*")
-    
-    # Calculate brand-level metrics
-    brand_summary = []
-    
-    # Group by brand (assuming we have brand information - we'll use SKU names as proxy)
-    # Since we don't have explicit brand grouping, we'll create a simplified view
-    # showing how each SKU contributes to the owner's portfolio balance
-    
-    # Calculate portfolio-level metrics (averages, not sums)
-    avg_owner_iv = df['Owner_IV'].mean()
-    avg_owner_cannibal = df['Owner_Cannibal_Ratio'].mean()
-    net_portfolio_effect = avg_owner_iv - (avg_owner_cannibal * 0.2)
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.metric("💰 Avg Owner IV", f"{avg_owner_iv:.1f}%")
-        st.caption("Average incremental value across SKUs")
-    
-    with col2:
-        st.metric("♻️ Avg Cannibalization", f"{avg_owner_cannibal:.1f}%")
-        st.caption("Average portfolio cannibalization")
-    
-    with col3:
-        st.metric("📊 Net Portfolio Effect", f"{net_portfolio_effect:.1f}%")
-        if net_portfolio_effect > 0:
-            st.caption("✅ Positive portfolio impact")
-        else:
-            st.caption("⚠️ Negative portfolio impact")
-    
-    # Create a balance chart showing IV vs Cannibalization for each SKU
-    fig = go.Figure()
-    
-    for idx, row in df.iterrows():
-        # Color based on net effect
-        net_effect = row['Owner_IV'] - (row['Owner_Cannibal_Ratio'] * 0.2)
-        
-        if net_effect > 2.0:
-            color = 'green'
-            symbol = 'circle'
-        elif net_effect > 0.5:
-            color = 'orange'
-            symbol = 'square'
-        else:
-            color = 'red'
-            symbol = 'diamond'
-        
-        fig.add_trace(go.Scatter(
-            x=[row['Owner_IV']],
-            y=[row['Owner_Cannibal_Ratio']],
-            mode='markers+text',
-            marker=dict(
-                size=15,
-                color=color,
-                symbol=symbol,
-                line=dict(width=2, color='black')
-            ),
-            text=[row['SKU']],
-            textposition="top center",
-            textfont=dict(color='black', size=10),
-            name=row['SKU'],
-            hovertemplate=f"<b>{row['SKU']}</b><br>" +
-                         f"Owner IV: {row['Owner_IV']:.1f}%<br>" +
-                         f"Owner Cannibal: {row['Owner_Cannibal_Ratio']:.1f}%<br>" +
-                         f"Net Effect: {net_effect:.1f}%<extra></extra>"
-        ))
-    
-    # Add balance zones
-    fig.add_shape(
-        type="rect",
-        x0=0, y0=0, x1=8, y1=10,
-        fillcolor="lightgreen",
-        opacity=0.2,
-        line=dict(width=0)
-    )
-    
-    fig.add_shape(
-        type="rect",
-        x0=0, y0=10, x1=8, y1=20,
-        fillcolor="lightyellow",
-        opacity=0.2,
-        line=dict(width=0)
-    )
-    
-    fig.add_shape(
-        type="rect",
-        x0=0, y0=20, x1=8, y1=30,
-        fillcolor="lightcoral",
-        opacity=0.2,
-        line=dict(width=0)
-    )
-    
-    fig.update_layout(
-        title="Portfolio Balance: Owner IV vs Cannibalization",
-        xaxis_title="Owner Incremental Value (%)",
-        yaxis_title="Owner Cannibalization Ratio (%)",
-        xaxis=dict(range=[0, 8]),
-        yaxis=dict(range=[0, 30]),
-        showlegend=False,
-        height=500,
-        plot_bgcolor='white',
-        annotations=[
-            dict(x=4, y=5, text="🟢 Optimal Zone<br>High IV, Low Cannibal", 
-                 showarrow=False, font=dict(size=10, color='green')),
-            dict(x=4, y=15, text="🟡 Caution Zone<br>Moderate Trade-offs", 
-                 showarrow=False, font=dict(size=10, color='orange')),
-            dict(x=4, y=25, text="🔴 Risk Zone<br>High Cannibal Risk", 
-                 showarrow=False, font=dict(size=10, color='red'))
-        ]
-    )
-    
-    st.plotly_chart(fig, use_container_width=True)
-    
-    # Portfolio balance summary
-    st.markdown("#### 📊 Portfolio Balance Summary")
-    
-    optimal_skus = df[(df['Owner_IV'] >= 3.0) & (df['Owner_Cannibal_Ratio'] <= 10)].shape[0]
-    caution_skus = df[(df['Owner_IV'] >= 2.0) & (df['Owner_Cannibal_Ratio'] <= 20)].shape[0]
-    risk_skus = df[(df['Owner_Cannibal_Ratio'] > 20)].shape[0]
-    
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.metric("🟢 Optimal SKUs", optimal_skus)
-        st.caption("High IV, Low Cannibal")
-    
-    with col2:
-        st.metric("🟡 Caution SKUs", caution_skus - optimal_skus)
-        st.caption("Moderate Trade-offs")
-    
-    with col3:
-        st.metric("🔴 Risk SKUs", risk_skus)
-        st.caption("High Cannibal Risk")
-    
-    with col4:
-        if len(df) > 0:
-            portfolio_health = ((optimal_skus + (caution_skus - optimal_skus) * 0.5) / len(df) * 100)
-            st.metric("📈 Portfolio Health", f"{portfolio_health:.0f}%")
-        else:
-            st.metric("📈 Portfolio Health", "N/A")
-        st.caption("Overall Balance Score")
-    
-    # Assumption note
-    st.caption("📝 **Assumption**: Portfolio balance calculated using average Owner IV and Cannibalization metrics. Net effect = Avg Owner IV - (Avg Cannibalization × 0.2).")
 
 def create_definitions_thresholds_sheet():
     """
@@ -2839,15 +2283,16 @@ def create_cannibalization_watchlist(df):
         with st.container():
             st.markdown("---")
             
-            col1, col2, col3, col4 = st.columns([2, 3, 3, 2])
+            # First row: Basic info and metrics
+            col1, col2, col3 = st.columns([1, 2, 2])
             
             with col1:
-                st.markdown(f"**{row['SKU']}**")
+                st.subheader(f"{row['SKU']}")
                 st.markdown(f"Rank: #{idx + 1}")
                 st.markdown(f"**{row['Risk_Level']}**")
             
             with col2:
-                st.markdown("**Cannibalization Impact:**")
+                st.subheader("Cannibalization Impact:")
                 st.metric("Owner Cannibal Ratio", f"{row['Owner_Cannibal_Ratio']:.1f}%")
                 st.metric("Brand Cannibal Ratio", f"{row['Brand_Cannibal_Ratio']:.1f}%")
                 
@@ -2861,7 +2306,7 @@ def create_cannibalization_watchlist(df):
                     st.success(f"✅ Low internal impact: {cannibal_pct:.1f}%")
             
             with col3:
-                st.markdown("**Owner Portfolio Impact:**")
+                st.subheader("Owner Portfolio Impact:")
                 st.metric("Owner IV", f"{row['Owner_IV']:.1f}%")
                 st.metric("Owner Capture Eff", f"{row['Owner_Capture_Eff']:.1f}%")
                 
@@ -2874,8 +2319,11 @@ def create_cannibalization_watchlist(df):
                 else:
                     st.error(f"Net Negative: {net_effect:.1f}%")
             
-            with col4:
-                st.markdown("**Recommendation:**")
+            # Second row: Recommendation in 3 columns
+            st.subheader("Recommendation:")
+            rec_col1, rec_col2, rec_col3 = st.columns([1, 2, 2])
+            
+            with rec_col1:
                 recommendation, confidence, confidence_score, rec_color = get_action_recommendation(row)
                 
                 if rec_color == "success":
@@ -2894,9 +2342,35 @@ def create_cannibalization_watchlist(df):
                     st.warning("⚠️ **Watch impact** - Moderate cannibalization")
                 else:
                     st.success("✅ **Safe to proceed** - Low cannibalization")
-                
+            
+            with rec_col2:
                 # Add What Could Change box for each SKU
                 create_what_could_change_box(row)
+            
+            with rec_col3:
+                st.markdown("**💡 Recommendations:**")
+                # Calculate sensitivity level for recommendations
+                high_sensitivity_count = sum([
+                    row['Brand_IV'] >= 6.0,
+                    row['Brand_Capture_Eff'] >= 80,
+                    row['Brand_Cannibal_Ratio'] >= 15,
+                    row['Brand_VaR10'] >= 5
+                ])
+                
+                # Add specific recommendations based on sensitivity
+                if high_sensitivity_count >= 3:
+                    st.caption("• Monitor price elasticity closely during launch")
+                    st.caption("• Test pack formats in pilot markets")
+                    st.caption("• Develop contingency plans for market changes")
+                    st.caption("• Consider phased rollout to manage risk")
+                elif high_sensitivity_count >= 2:
+                    st.caption("• Monitor key sensitivity factors")
+                    st.caption("• Prepare for potential market adjustments")
+                    st.caption("• Consider A/B testing for optimization")
+                else:
+                    st.caption("• Relatively stable launch profile")
+                    st.caption("• Focus on execution excellence")
+                    st.caption("• Monitor for unexpected market shifts")
         
         # Add assumption note
         st.caption(get_assumption_note('cannibalization'))
@@ -2967,15 +2441,16 @@ def create_category_lift_table(df):
         with st.container():
             st.markdown("---")
             
-            col1, col2, col3, col4 = st.columns([2, 3, 3, 2])
+            # First row: Basic info and metrics
+            col1, col2, col3 = st.columns([2, 3, 3])
             
             with col1:
-                st.markdown(f"**{row['SKU']}**")
+                st.subheader(f"{row['SKU']}")
                 st.markdown(f"Rank: #{idx + 1}")
                 st.markdown(f"**{row['Expansion_Potential']}**")
             
             with col2:
-                st.markdown("**Category Expansion Metrics:**")
+                st.subheader("Category Expansion Metrics:")
                 st.metric("Brand Category Lift", f"{row['Brand_Category_Lift']:.1f}%")
                 st.metric("Owner Category Lift", f"{row['Owner_Category_Lift']:.1f}%")
                 
@@ -2991,7 +2466,7 @@ def create_category_lift_table(df):
                     st.error(f"⚠️ Minimal expansion potential: {lift_pct:.1f}%")
             
             with col3:
-                st.markdown("**Volume Source Breakdown:**")
+                st.subheader("Volume Source Breakdown:")
                 st.metric("Captured Volume", f"{row['Brand_Abs_Captured']:.1f}%")
                 st.metric("Cannibalized Volume", f"{row['Brand_Abs_Cannibalized']:.1f}%")
                 st.metric("Category Lift Volume", f"{row['Brand_Abs_Category_Lift']:.1f}%")
@@ -3005,9 +2480,19 @@ def create_category_lift_table(df):
                 else:
                     st.error(f"Limited Expansion: {true_expansion:.1f}%")
             
-            with col4:
-                st.markdown("**Expectation Management:**")
-                
+            # Second row: Headers on same level
+            exp_col1, exp_col2 = st.columns([1, 4])
+            
+            with exp_col1:
+                st.subheader("Expectation Management:")
+            
+            with exp_col2:
+                st.subheader("🔄 What Could Change?")
+            
+            # Third row: Content below headers
+            exp_col1, exp_col2 = st.columns([1, 4])
+            
+            with exp_col1:
                 # Tempered expectations based on lift level
                 if row['Brand_Category_Lift'] >= 6:
                     st.success("🎯 **High Expectations** - Strong category growth potential")
@@ -3029,9 +2514,82 @@ def create_category_lift_table(df):
                     st.success("✅ True expansion potential")
                 else:
                     st.warning("⚖️ Balanced impact")
+            
+            with exp_col2:
+                # Add What Could Change box for each SKU (without header since it's already above)
+                # We need to modify create_what_could_change_box to not show the header
+                # For now, let's create a custom version
+                high_sensitivity_count = sum([
+                    row['Brand_IV'] >= 6.0,
+                    row['Brand_Capture_Eff'] >= 80,
+                    row['Brand_Cannibal_Ratio'] >= 15,
+                    row['Brand_VaR10'] >= 5
+                ])
                 
-                # Add What Could Change box for each SKU
-                create_what_could_change_box(row)
+                if high_sensitivity_count >= 3:
+                    sensitivity_level = "🔴 High Sensitivity"
+                    sensitivity_color = "error"
+                elif high_sensitivity_count >= 2:
+                    sensitivity_level = "🟡 Moderate Sensitivity"
+                    sensitivity_color = "warning"
+                else:
+                    sensitivity_level = "🟢 Low Sensitivity"
+                    sensitivity_color = "success"
+                
+                # Display sensitivity level
+                if sensitivity_color == "success":
+                    st.success(f"**{sensitivity_level}**")
+                elif sensitivity_color == "warning":
+                    st.warning(f"**{sensitivity_level}**")
+                else:
+                    st.error(f"**{sensitivity_level}**")
+                
+                # Display sensitivity factors
+                sensitivity_factors = []
+                
+                # Price sensitivity
+                if row['Brand_IV'] >= 6.0:
+                    sensitivity_factors.append("💰 **Price Sensitive**: High IV suggests strong price elasticity - 10% price increase could reduce demand by 15-20%")
+                elif row['Brand_IV'] >= 4.0:
+                    sensitivity_factors.append("💰 **Moderate Price Sensitivity**: Some IV suggests moderate price elasticity - price changes could impact 5-10% of volume")
+                else:
+                    sensitivity_factors.append("💰 **Low Price Sensitivity**: Lower IV suggests limited price elasticity - price changes have minimal impact")
+                
+                # Pack sensitivity
+                if row['Brand_Capture_Eff'] >= 80:
+                    sensitivity_factors.append("📦 **Moderate Pack Sensitivity**: Good capture efficiency suggests some pack-size awareness - format changes could impact 10-20% of volume")
+                elif row['Brand_Capture_Eff'] >= 60:
+                    sensitivity_factors.append("📦 **Low Pack Sensitivity**: Moderate capture efficiency suggests limited pack-size awareness - format changes have minimal impact")
+                else:
+                    sensitivity_factors.append("📦 **Very Low Pack Sensitivity**: Lower capture efficiency suggests minimal pack-size awareness - format changes unlikely to impact volume")
+                
+                # Cannibalization sensitivity
+                if row['Brand_Cannibal_Ratio'] >= 15:
+                    sensitivity_factors.append("⚠️ **High Cannibalization Risk**: Changes could significantly impact internal portfolio - monitor brand owner portfolio closely")
+                elif row['Brand_Cannibal_Ratio'] >= 8:
+                    sensitivity_factors.append("⚠️ **Moderate Cannibalization Risk**: Changes could affect some internal products - watch for portfolio conflicts")
+                else:
+                    sensitivity_factors.append("✅ **Low Cannibalization Risk**: Changes unlikely to significantly impact internal portfolio")
+                
+                # Category lift sensitivity
+                if row['Brand_Category_Lift'] >= 6:
+                    sensitivity_factors.append("📈 **Category Growth Dependent**: High lift suggests reliance on category expansion - market conditions could significantly impact performance")
+                elif row['Brand_Category_Lift'] >= 4:
+                    sensitivity_factors.append("📈 **Moderate Category Dependency**: Some lift suggests partial reliance on category growth - monitor market trends")
+                else:
+                    sensitivity_factors.append("📈 **Low Category Dependency**: Lower lift suggests more share-based growth - less sensitive to market conditions")
+                
+                # Risk sensitivity
+                if row['Brand_VaR10'] >= 5:
+                    sensitivity_factors.append("🎯 **High Risk Sensitivity**: Elevated VaR suggests high volatility - external factors could cause significant swings")
+                elif row['Brand_VaR10'] >= 4:
+                    sensitivity_factors.append("🎯 **Moderate Risk Sensitivity**: Some VaR suggests moderate volatility - monitor external factors")
+                else:
+                    sensitivity_factors.append("🎯 **Low Risk Sensitivity**: Lower VaR suggests stability - less sensitive to external shocks")
+                
+                # Display sensitivity factors
+                for factor in sensitivity_factors:
+                    st.caption(factor)
     
     # Portfolio insights
     st.markdown("---")
@@ -3075,6 +2633,11 @@ def create_kpi_strip(df):
     """
     Create a KPI strip at the bottom that repeats key numbers for scanning when printed
     """
+    # Check if dataframe is empty
+    if df.empty:
+        st.warning("⚠️ No SKUs available for KPI summary")
+        return
+    
     st.markdown("---")
     st.markdown("### 📊 Portfolio KPI Summary - Quick Reference")
     st.markdown("*Key metrics for executive scanning and printing*")
@@ -3117,32 +2680,38 @@ def create_kpi_strip(df):
     
     with col1:
         high_iv = len(df[df['Brand_IV'] >= 6])
-        st.metric("High IV SKUs", high_iv, delta=f"{high_iv/len(df)*100:.0f}%")
+        delta_pct = f"{high_iv/len(df)*100:.0f}%" if len(df) > 0 else "0%"
+        st.metric("High IV SKUs", high_iv, delta=delta_pct)
         st.caption("≥6.0% Incremental Value")
     
     with col2:
         high_capture = len(df[df['Brand_Capture_Eff'] >= 80])
-        st.metric("High Capture", high_capture, delta=f"{high_capture/len(df)*100:.0f}%")
+        delta_pct = f"{high_capture/len(df)*100:.0f}%" if len(df) > 0 else "0%"
+        st.metric("High Capture", high_capture, delta=delta_pct)
         st.caption("≥80.0% Efficiency")
     
     with col3:
         low_cannibal = len(df[df['Brand_Cannibal_Ratio'] <= 10])
-        st.metric("Low Cannibal", low_cannibal, delta=f"{low_cannibal/len(df)*100:.0f}%")
+        delta_pct = f"{low_cannibal/len(df)*100:.0f}%" if len(df) > 0 else "0%"
+        st.metric("Low Cannibal", low_cannibal, delta=delta_pct)
         st.caption("≤10.0% Impact")
     
     with col4:
         high_lift = len(df[df['Brand_Category_Lift'] >= 6])
-        st.metric("High Expansion", high_lift, delta=f"{high_lift/len(df)*100:.0f}%")
+        delta_pct = f"{high_lift/len(df)*100:.0f}%" if len(df) > 0 else "0%"
+        st.metric("High Expansion", high_lift, delta=delta_pct)
         st.caption("≥6.0% Category Lift")
     
     with col5:
         low_risk = len(df[df['Brand_VaR10'] <= 4])
-        st.metric("Low Risk", low_risk, delta=f"{low_risk/len(df)*100:.0f}%")
+        delta_pct = f"{low_risk/len(df)*100:.0f}%" if len(df) > 0 else "0%"
+        st.metric("Low Risk", low_risk, delta=delta_pct)
         st.caption("≤4.0% VaR10")
     
     with col6:
         top_skus = len(df[df['Composite_Score'] >= df['Composite_Score'].quantile(0.8)])
-        st.metric("Top Performers", top_skus, delta=f"{top_skus/len(df)*100:.0f}%")
+        delta_pct = f"{top_skus/len(df)*100:.0f}%" if len(df) > 0 else "0%"
+        st.metric("Top Performers", top_skus, delta=delta_pct)
         st.caption("Top 20% Score")
     
     # Third row - Key insights and recommendations
@@ -3195,7 +2764,7 @@ def create_kpi_strip(df):
     
     # Footer with timestamp and version
     st.markdown("---")
-    st.markdown("**📋 Executive Summary** | *Generated for CMO Review* | *Print-Friendly Format*")
+    st.markdown("**Notes**")
     st.caption("💡 Use this KPI strip for quick portfolio assessment and executive briefings")
     st.caption("📊 **Standardized Scales**: All charts use consistent scales for reliable visual comparisons")
     st.caption("♿ **Accessibility**: Design uses shapes, text, and position instead of color for print and accessibility")
@@ -3255,19 +2824,24 @@ def create_small_multiples(df):
                     
                     confidence_height = max(2, min(10, confidence_height))  # Clamp between 2-10%
                 
-                # Create mini chart using HTML/CSS with confidence intervals
+                # Use HTML visualization for ALL metrics (like VaR10 Risk section)
+                # Determine color based on performance
+                if (metric['higher_better'] and value >= df[metric['name']].quantile(0.75)) or \
+                   (not metric['higher_better'] and value <= df[metric['name']].quantile(0.25)):
+                    bar_color = '#2E8B57'  # Green
+                elif (metric['higher_better'] and value >= df[metric['name']].median()) or \
+                     (not metric['higher_better'] and value <= df[metric['name']].median()):
+                    bar_color = '#FFA500'  # Orange
+                else:
+                    bar_color = '#DC143C'  # Red
+                
+                # Create HTML chart for all metrics
                 chart_html = f"""
                 <div style="text-align: center; margin: 5px;">
                     <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px;">{row['SKU']}</div>
                     <div style="position: relative; width: 100%; height: 60px; border: 1px solid #ccc; background: #f9f9f9;">
                         <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: {relative_height}%; 
-                                    background: {'#2E8B57' if (metric['higher_better'] and value >= df[metric['name']].quantile(0.75)) or 
-                                    (not metric['higher_better'] and value <= df[metric['name']].quantile(0.25)) else 
-                                    '#FFA500' if (metric['higher_better'] and value >= df[metric['name']].median()) or 
-                                    (not metric['higher_better'] and value <= df[metric['name']].median()) else '#DC143C'}; 
-                                    border-top: 1px solid #333;"></div>
-                        {'<div style="position: absolute; bottom: ' + str(relative_height - confidence_height/2) + '%; left: 10%; right: 10%; height: 1px; background: rgba(0,0,0,0.4); border-top: 1px solid rgba(0,0,0,0.6);"></div>' if confidence_visible else ''}
-                        {'<div style="position: absolute; bottom: ' + str(relative_height + confidence_height/2) + '%; left: 10%; right: 10%; height: 1px; background: rgba(0,0,0,0.4); border-top: 1px solid rgba(0,0,0,0.6);"></div>' if confidence_visible else ''}
+                                    background: {bar_color}; border-top: 1px solid #333;"></div>
                         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
                                     font-weight: bold; font-size: 11px; color: #333;">
                             {value:.1f}{metric['unit']}
@@ -3450,32 +3024,36 @@ def create_simple_decision_page(df):
     pilot_skus.sort(key=lambda x: x['score'], reverse=True)
     defer_skus.sort(key=lambda x: x['score'], reverse=True)
     
-    # Create three columns for the three decisions
-    col1, col2, col3 = st.columns(3)
+    # First row: Launch Now (full width)
+    st.markdown("### 🚀 Launch Now")
+    st.markdown(f"**{len(launch_now_skus)} SKUs**")
+    st.caption("High performance, low risk - ready for immediate launch")
     
-    with col1:
-        st.markdown("### 🚀 Launch Now")
-        st.markdown(f"**{len(launch_now_skus)} SKUs**")
-        st.caption("High performance, low risk - ready for immediate launch")
+    if launch_now_skus:
+        # Create 5 columns for SKUs
+        sku_cols = st.columns(5)
         
-        if launch_now_skus:
-            for sku_data in launch_now_skus:
+        for idx, sku_data in enumerate(launch_now_skus):
+            col_idx = idx % 5  # Cycle through 5 columns
+            
+            with sku_cols[col_idx]:
                 with st.container():
                     st.markdown(f"**{sku_data['sku']}**")
-                    st.caption(f"Score: {sku_data['score']:.1f} | Confidence: {sku_data['confidence']}")
+                    st.caption(f"Score: {sku_data['score']:.1f}")
+                    st.caption(f"Confidence: {sku_data['confidence']}")
                     
                     # Key metrics in compact format
-                    col1_1, col1_2 = st.columns(2)
-                    with col1_1:
-                        st.caption(f"💰 IV: {sku_data['iv']:.1f}%")
-                        st.caption(f"🎯 Cap: {sku_data['capture']:.1f}%")
-                    with col1_2:
-                        st.caption(f"♻️ Can: {sku_data['cannibal']:.1f}%")
-                        st.caption(f"🛡️ VaR: {sku_data['var']:.1f}%")
+                    st.caption(f"💰 IV: {sku_data['iv']:.1f}%")
+                    st.caption(f"🎯 Cap: {sku_data['capture']:.1f}%")
+                    st.caption(f"♻️ Can: {sku_data['cannibal']:.1f}%")
+                    st.caption(f"🛡️ VaR: {sku_data['var']:.1f}%")
                     
                     st.markdown("---")
-        else:
-            st.info("No SKUs ready for immediate launch")
+    else:
+        st.info("No SKUs ready for immediate launch")
+    
+    # Second row: Pilot and Defer in 2 columns
+    col2, col3 = st.columns(2)
     
     with col2:
         st.markdown("### 🧪 Pilot")
@@ -3535,13 +3113,16 @@ def create_simple_decision_page(df):
         st.metric("Total SKUs", len(df))
     
     with col2:
-        st.metric("Launch Now", len(launch_now_skus), delta=f"{len(launch_now_skus)/len(df)*100:.0f}%" if len(df) > 0 else "0%")
+        delta_pct = f"{len(launch_now_skus)/len(df)*100:.0f}%" if len(df) > 0 else "0%"
+        st.metric("Launch Now", len(launch_now_skus), delta=delta_pct)
     
     with col3:
-        st.metric("Pilot", len(pilot_skus), delta=f"{len(pilot_skus)/len(df)*100:.0f}%" if len(df) > 0 else "0%")
+        delta_pct = f"{len(pilot_skus)/len(df)*100:.0f}%" if len(df) > 0 else "0%"
+        st.metric("Pilot", len(pilot_skus), delta=delta_pct)
     
     with col4:
-        st.metric("Defer", len(defer_skus), delta=f"{len(defer_skus)/len(df)*100:.0f}%" if len(df) > 0 else "0%")
+        delta_pct = f"{len(defer_skus)/len(df)*100:.0f}%" if len(df) > 0 else "0%"
+        st.metric("Defer", len(defer_skus), delta=delta_pct)
     
     # Decision criteria explanation
     st.markdown("---")
@@ -3610,40 +3191,32 @@ if not df.empty:
         st.session_state.risk_level = "All"
     if 'launch_readiness' not in st.session_state:
         st.session_state.launch_readiness = "All"
-    if 'analysis_perspective' not in st.session_state:
-        st.session_state.analysis_perspective = "Brand View"
+    # Note: analysis_perspective removed - now showing both Brand and Owner perspectives
+    
+    # Initialize active tab state to preserve tab selection during reruns
+    if 'active_tab' not in st.session_state:
+        st.session_state.active_tab = 1  # Default to Overview tab (index 1)
     
     # Add clear filters button (before creating widgets)
+    st.markdown("""
+    <style>
+    .stButton > button {
+        padding: 0.5rem 1rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     if st.sidebar.button("🔄 Clear All Filters"):
         # Reset all filter states to default values
         st.session_state.performance_tier = "All"
         st.session_state.risk_level = "All"
         st.session_state.launch_readiness = "All"
-        st.session_state.analysis_perspective = "Brand View"
         st.session_state.perspective = "Brand"
-        st.rerun()
+        # Note: Removed st.rerun() to prevent tab reset
+        st.sidebar.success("✅ Filters cleared!")
     
-    # Brand vs Owner toggle
-    analysis_perspective = st.sidebar.radio(
-        "📊 Analysis Perspective:",
-        ["Brand View", "Owner View"],
-        index=0 if st.session_state.analysis_perspective == "Brand View" else 1,
-        key="analysis_perspective",
-        help="Switch between Brand and Owner metrics without changing layout"
-    )
-    
-    # Set the perspective for all calculations
-    if analysis_perspective == "Brand View":
-        st.session_state.perspective = "Brand"
-    else:
-        st.session_state.perspective = "Owner"
-    
-    # Show current perspective indicator
-    current_perspective = st.session_state.perspective
-    if current_perspective == "Brand":
-        st.sidebar.success("📊 **Current View**: Brand Metrics")
-    else:
-        st.sidebar.info("🏢 **Current View**: Owner Metrics")
+    # SKU Level Analysis - showing both Brand and Owner perspectives
+    st.sidebar.info("📊 **SKU Level Analysis**: Showing both Brand and Owner perspectives")
     
     # Performance tier filter
     performance_tier = st.sidebar.selectbox(
@@ -3723,8 +3296,7 @@ if not df.empty:
         
         # Show active filters
         active_filters = []
-        if analysis_perspective != "Brand View":
-            active_filters.append(f"Perspective: {analysis_perspective}")
+        # Note: analysis_perspective removed - now showing both Brand and Owner perspectives
         if performance_tier != "All":
             active_filters.append(f"Performance: {performance_tier}")
         if risk_level != "All":
@@ -3741,15 +3313,18 @@ if not df.empty:
     df_to_use = filtered_df
     
     # Create tabs with shorter names to fit all in one row
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13, tab14, tab15 = st.tabs([
-        "📈 Overview", "🗺️ Risk", "⚠️ Cannibal", "📈 Lift", "📊 Multiples", 
-        "⚖️ Balance", "🎯 Rivals", "📊 Confidence", "💰 Cost", "📊 Compact", 
-        "📋 Executive", "🔍 Details", "📖 Guide", "📋 Reference", "🎯 Decision"
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
+        "How to use the dashboard", "📈 Overview", "🗺️ Risk", "⚠️ Cannibal", "📈 Lift", "📊 Multiples", 
+        "🎯 Rivals", "📊 Compact", "📋 Executive", "🔍 Details", "📋 Reference", "🎯 Decision"
     ])
     
     with tab1:
-        st.header(f"📈 Portfolio Leaderboard {get_perspective_label()}")
-        st.markdown("*Sorted by composite score (weighted by Incremental Value, Capture Efficiency, and Cannibalization)*")
+        # Call the visual guide function (has its own header)
+        create_visual_guide_appendix()
+    
+    with tab2:
+        st.header("📈 Portfolio Leaderboard - SKU Level Analysis")
+        st.markdown("*Showing both Brand and Owner perspectives for each SKU - sorted by composite score*")
         
         # Top 5 Launch Callout
         create_top5_launch_callout(df_to_use)
@@ -3781,7 +3356,7 @@ if not df.empty:
                     # Add thicker separator
                     st.markdown("<hr style='border: 3px solid #333; margin: 20px 0;'>", unsafe_allow_html=True)
                     
-                    col1, col2, col3, col4 = st.columns([2, 4, 3, 3])
+                    col1, col2 = st.columns([3, 7])
                     
                     with col1:
                         # Top banner with SKU info and bookmark
@@ -3830,68 +3405,80 @@ if not df.empty:
                         st.caption(f"*{net_desc}*")
                     
                     with col2:
-                        st.markdown("**Key Metrics:**")
-                        col2_1, col2_2 = st.columns(2)
+                        st.subheader("Key Metrics:")
                         
-                        with col2_1:
-                            iv_value = get_metric_by_perspective('IV', row)
-                            iv_metric_name = get_metric_name_by_perspective('IV')
-                            st.markdown(f"**💰 Incremental Value: {iv_value:.1f}%**")
-                            st.markdown(f"*{get_plain_english_headline(iv_metric_name, iv_value)}*")
-                            st.code(create_in_cell_bar(iv_value, 8, 8))
-                            st.caption(f"*{get_why_tag(iv_value, 'IV')}*")
+                        # Create 2x2 grid for metrics
+                        metric_col1, metric_col2 = st.columns(2)
+                        
+                        with metric_col1:
+                            # Dual perspective display for IV
+                            brand_iv, owner_iv = get_dual_metric_display('IV', row)
+                            st.markdown(f"**💰 Incremental Value:**")
+                            st.markdown(f"📊 **Brand**: {brand_iv:.1f}% | 🏢 **Owner**: {owner_iv:.1f}%")
+                            st.code(f"📊 Brand: {create_in_cell_bar(brand_iv, 8, 8)}")
+                            st.code(f"🏢 Owner: {create_in_cell_bar(owner_iv, 8, 8)}")
+                            st.caption(f"*Brand: {get_why_tag(brand_iv, 'IV')} | Owner: {get_why_tag(owner_iv, 'IV')}*")
                             
-                            capture_value = get_metric_by_perspective('Capture_Eff', row)
-                            capture_metric_name = get_metric_name_by_perspective('Capture_Eff')
-                            st.markdown(f"**🎯 Capture Efficiency: {capture_value:.1f}%**")
-                            st.markdown(f"*{get_plain_english_headline(capture_metric_name, capture_value)}*")
-                            st.code(create_in_cell_bar(capture_value, 100, 8))
-                            st.caption(f"*{get_why_tag(capture_value, 'Capture')}*")
+                            # Dual perspective display for Capture Efficiency
+                            brand_capture, owner_capture = get_dual_metric_display('Capture_Eff', row)
+                            st.markdown(f"**🎯 Capture Efficiency:**")
+                            st.markdown(f"📊 **Brand**: {brand_capture:.1f}% | 🏢 **Owner**: {owner_capture:.1f}%")
+                            st.code(f"📊 Brand: {create_in_cell_bar(brand_capture, 100, 8)}")
+                            st.code(f"🏢 Owner: {create_in_cell_bar(owner_capture, 100, 8)}")
+                            st.caption(f"*Brand: {get_why_tag(brand_capture, 'Capture')} | Owner: {get_why_tag(owner_capture, 'Capture')}*")
                         
-                        with col2_2:
-                            cannibal_value = get_metric_by_perspective('Cannibal_Ratio', row)
-                            cannibal_metric_name = get_metric_name_by_perspective('Cannibal_Ratio')
-                            st.markdown(f"**♻️ Cannibalization: {cannibal_value:.1f}%**")
-                            st.markdown(f"*{get_plain_english_headline(cannibal_metric_name, cannibal_value)}*")
-                            st.code(create_in_cell_bar(cannibal_value, 30, 8, reverse=True))
-                            st.caption(f"*{get_why_tag(cannibal_value, 'Cannibal')}*")
+                        with metric_col2:
+                            # Dual perspective display for Cannibalization
+                            brand_cannibal, owner_cannibal = get_dual_metric_display('Cannibal_Ratio', row)
+                            st.markdown(f"**♻️ Cannibalization:**")
+                            st.markdown(f"📊 **Brand**: {brand_cannibal:.1f}% | 🏢 **Owner**: {owner_cannibal:.1f}%")
+                            st.code(f"📊 Brand: {create_in_cell_bar(brand_cannibal, 30, 8, reverse=True)}")
+                            st.code(f"🏢 Owner: {create_in_cell_bar(owner_cannibal, 30, 8, reverse=True)}")
+                            st.caption(f"*Brand: {get_why_tag(brand_cannibal, 'Cannibal')} | Owner: {get_why_tag(owner_cannibal, 'Cannibal')}*")
                             
-                            var_value = get_metric_by_perspective('VaR10', row)
-                            var_metric_name = get_metric_name_by_perspective('VaR10')
-                            st.markdown(f"**🛡️ VaR10 Risk: {var_value:.1f}%**")
-                            st.markdown(f"*{get_plain_english_headline(var_metric_name, var_value)}*")
-                            st.code(create_in_cell_bar(var_value, 8, 8, reverse=True))
-                            st.caption(f"*{get_why_tag(var_value, 'VaR')}*")
+                            # Dual perspective display for VaR10 Risk
+                            brand_var, owner_var = get_dual_metric_display('VaR10', row)
+                            st.markdown(f"**🛡️ VaR10 Risk:**")
+                            st.markdown(f"📊 **Brand**: {brand_var:.1f}% | 🏢 **Owner**: {owner_var:.1f}%")
+                            st.code(f"📊 Brand: {create_in_cell_bar(brand_var, 8, 8, reverse=True)}")
+                            st.code(f"🏢 Owner: {create_in_cell_bar(owner_var, 8, 8, reverse=True)}")
+                            st.caption(f"*Brand: {get_why_tag(brand_var, 'VaR')} | Owner: {get_why_tag(owner_var, 'VaR')}*")
                     
-                    with col3:
-                        st.markdown("**Additional Metrics:**")
-                        lift_value = get_metric_by_perspective('Category_Lift', row)
-                        lift_metric_name = get_metric_name_by_perspective('Category_Lift')
-                        st.markdown(f"**🌊 Category Lift: {lift_value:.1f}%**")
-                        st.markdown(f"*{get_plain_english_headline(lift_metric_name, lift_value)}*")
-                        st.code(create_in_cell_bar(lift_value, 8, 8))
-                        st.caption(f"*{get_why_tag(lift_value, 'Category_Lift')}*")
+                        # Additional Metrics section
+                        st.subheader("Additional Metrics:")
                         
-                        st.markdown(f"**🏪 Market HHI: {row['Market_HHI']:.1f}%**")
-                        st.markdown(f"*{get_plain_english_headline('Market_HHI', row['Market_HHI'])}*")
-                        st.code(create_in_cell_bar(row['Market_HHI'], 10, 8))
-                        st.caption(f"*{get_why_tag(row['Market_HHI'], 'HHI')}*")
+                        # Create 2x2 grid for additional metrics
+                        add_metric_col1, add_metric_col2 = st.columns(2)
                         
-                        prob_value = get_metric_by_perspective('IV_Prob', row)
-                        prob_metric_name = get_metric_name_by_perspective('IV_Prob')
-                        st.markdown(f"**📊 Confidence: {prob_value:.1f}%**")
-                        st.markdown(f"*{get_plain_english_headline(prob_metric_name, prob_value)}*")
-                        st.code(create_in_cell_bar(prob_value, 100, 8))
-                        st.caption(f"*{get_why_tag(prob_value, 'Prob')}*")
+                        with add_metric_col1:
+                            # Dual perspective display for Category Lift
+                            brand_lift, owner_lift = get_dual_metric_display('Category_Lift', row)
+                            st.markdown(f"**🌊 Category Lift:**")
+                            st.markdown(f"📊 **Brand**: {brand_lift:.1f}% | 🏢 **Owner**: {owner_lift:.1f}%")
+                            st.code(f"📊 Brand: {create_in_cell_bar(brand_lift, 8, 8)}")
+                            st.code(f"🏢 Owner: {create_in_cell_bar(owner_lift, 8, 8)}")
+                            st.caption(f"*Brand: {get_why_tag(brand_lift, 'Category_Lift')} | Owner: {get_why_tag(owner_lift, 'Category_Lift')}*")
+                            
+                            # Market HHI (same for both perspectives)
+                            st.markdown(f"**🏪 Market HHI: {row['Market_HHI']:.1f}%**")
+                            st.markdown(f"*{get_plain_english_headline('Market_HHI', row['Market_HHI'])}*")
+                            st.code(create_in_cell_bar(row['Market_HHI'], 10, 8))
+                            st.caption(f"*{get_why_tag(row['Market_HHI'], 'HHI')}*")
                         
-                        create_competitor_panel(row)
-                    
-                    with col4:
-                        st.markdown("**Plain English Summary:**")
-                        st.info(get_plain_english_summary(row))
+                        with add_metric_col2:
+                            # Dual perspective display for Confidence
+                            brand_prob, owner_prob = get_dual_metric_display('IV_Prob', row)
+                            st.markdown(f"**📊 Confidence:**")
+                            st.markdown(f"📊 **Brand**: {brand_prob:.1f}% | 🏢 **Owner**: {owner_prob:.1f}%")
+                            st.code(f"📊 Brand: {create_in_cell_bar(brand_prob, 100, 8)}")
+                            st.code(f"🏢 Owner: {create_in_cell_bar(owner_prob, 100, 8)}")
+                            st.caption(f"*Brand: {get_why_tag(brand_prob, 'Prob')} | Owner: {get_why_tag(owner_prob, 'Prob')}*")
+                            
+                            create_competitor_panel(row)
                         
-                        st.markdown("**Technical Summary:**")
-                        st.info(get_human_summary(row))
+                        # Summary section
+                        st.subheader("Summary:")
+                        st.info(f"{get_plain_english_summary(row)}\n\n**Technical:** {get_human_summary(row)}")
                         
                         # Add What Could Change box
                         create_what_could_change_box(row)
@@ -3906,13 +3493,14 @@ if not df.empty:
                     st.plotly_chart(chart, use_container_width=True)
                     st.caption(get_assumption_note('source_volume'))
                     
-                    # Add Next Steps footer
-                    create_next_steps_footer(row)
                     
                     # Add Portfolio Ranking footer
                     create_sku_ranking_footer(row, df_to_use)
+        
+        # Add KPI strip only to Overview tab
+        create_kpi_strip(df_to_use)
     
-    with tab2:
+    with tab3:
         st.header(f"🗺️ Portfolio Risk Map {get_perspective_label()}")
         st.markdown("*Interactive risk analysis: VaR10 vs Incremental Value trade-offs*")
         
@@ -3944,41 +3532,32 @@ if not df.empty:
         with col1:
             st.metric("Total SKUs", len(df_to_use))
         with col2:
-            st.metric("Low Risk", low_risk, delta=f"{low_risk/len(df_to_use)*100:.0f}%" if len(df_to_use) > 0 else "0%")
+            delta_pct = f"{low_risk/len(df_to_use)*100:.0f}%" if len(df_to_use) > 0 else "0%"
+            st.metric("Low Risk", low_risk, delta=delta_pct)
         with col3:
-            st.metric("Medium Risk", medium_risk, delta=f"{medium_risk/len(df_to_use)*100:.0f}%" if len(df_to_use) > 0 else "0%")
+            delta_pct = f"{medium_risk/len(df_to_use)*100:.0f}%" if len(df_to_use) > 0 else "0%"
+            st.metric("Medium Risk", medium_risk, delta=delta_pct)
         with col4:
-            st.metric("High Risk", high_risk, delta=f"{high_risk/len(df_to_use)*100:.0f}%" if len(df_to_use) > 0 else "0%")
+            delta_pct = f"{high_risk/len(df_to_use)*100:.0f}%" if len(df_to_use) > 0 else "0%"
+            st.metric("High Risk", high_risk, delta=delta_pct)
     
-    with tab3:
+    with tab4:
         # Call the cannibalization watchlist function (has its own header)
         create_cannibalization_watchlist(df_to_use)
     
-    with tab4:
+    with tab5:
         # Call the category lift table function (has its own header)
         create_category_lift_table(df_to_use)
     
-    with tab5:
+    with tab6:
         # Call the small multiples function (has its own header)
         create_small_multiples(df_to_use)
-    
-    with tab6:
-        # Call the portfolio balance widget function (has its own header)
-        create_portfolio_balance_widget(df_to_use)
     
     with tab7:
         # Call the closest rivals widget function (has its own header)
         create_closest_rivals_widget(df_to_use)
     
     with tab8:
-        # Call the confidence meter widget function (has its own header)
-        create_confidence_meter_widget(df_to_use)
-    
-    with tab9:
-        # Call the cost-to-win placeholder function (has its own header)
-        create_cost_to_win_placeholder(df_to_use)
-    
-    with tab10:
         st.header("📊 Compact View")
         st.markdown("*Space-efficient view with in-cell bars and short labels*")
         
@@ -3990,11 +3569,11 @@ if not df.empty:
         # Call the compact metrics table function
         create_compact_metrics_table(df_to_use)
     
-    with tab11:
+    with tab9:
         # Call the executive booklet function (has its own header)
         create_executive_booklet(df_to_use)
     
-    with tab12:
+    with tab10:
         st.header("🔍 Complete Data View")
         st.markdown(create_hierarchical_table(df_to_use), unsafe_allow_html=True)
         
@@ -4011,20 +3590,16 @@ if not df.empty:
         with col4:
             st.metric("Avg Market HHI", f"{df_to_use['Market_HHI'].mean():.2f}%")
     
-    with tab13:
-        # Call the visual guide function (has its own header)
-        create_visual_guide_appendix()
-    
-    with tab14:
+    with tab11:
         # Call the definitions and thresholds function (has its own header)
         create_definitions_thresholds_sheet()
     
-    with tab15:
+    with tab12:
         # Call the simple decision page function (has its own header)
         create_simple_decision_page(df_to_use)
     
-    # Add KPI strip at the bottom of each tab
-    create_kpi_strip(df_to_use)
+    # Add KPI strip only to Overview tab
+    # create_kpi_strip(df_to_use)  # Moved to Overview tab only
     
 else:
     st.error("❌ No data loaded")

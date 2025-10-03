@@ -1133,6 +1133,14 @@ def create_executive_booklet(df):
     st.markdown("### 📋 Executive Booklet")
     st.markdown("*3-page executive summary with links to detailed analysis*")
     
+    # How to read this tab
+    st.markdown("**How to read**")
+    st.markdown("• **Executive Summary**: High-level overview for leadership decision-making")
+    st.markdown("• **Key Insights**: Top performers, risks, and opportunities")
+    st.markdown("• **Visual Charts**: Easy-to-read charts for presentations")
+    st.markdown("• **Action Items**: Clear recommendations for next steps")
+    st.markdown("📊 **Example**: Use this view for executive presentations and strategic planning")
+    
     # Page selector
     page = st.radio(
         "📄 Select Page:",
@@ -1941,6 +1949,14 @@ def create_closest_rivals_widget(df):
     st.markdown("### 🎯 Closest Rivals Analysis")
     st.markdown("*Top competitors by diversion percentage for competitive messaging planning*")
     
+    # How to read this tab
+    st.markdown("**How to read**")
+    st.markdown("• **Competitor Analysis**: Shows which competitors each SKU will impact most")
+    st.markdown("• **Diversion Ratios**: Percentage of volume taken from each competitor")
+    st.markdown("• **Top Competitors**: Ranked by highest diversion impact")
+    st.markdown("• **Market Concentration**: HHI shows competitive landscape density")
+    st.markdown("📊 **Example**: SKU with 15% diversion from Competitor A means 15% of its volume comes from Competitor A")
+    
     # Aggregate competitor data across all SKUs
     competitor_data = {}
     
@@ -2116,6 +2132,14 @@ def create_definitions_thresholds_sheet():
     st.markdown("## 📋 Quick Reference: Definitions & Thresholds")
     st.markdown("*Single-page guide to all metrics, definitions, and decision thresholds*")
     
+    # How to read this tab
+    st.markdown("**How to read**")
+    st.markdown("• **Definitions**: Clear explanations of all metrics and terms")
+    st.markdown("• **Thresholds**: Performance benchmarks for Go/Watch/Hold decisions")
+    st.markdown("• **Methodology**: How calculations and recommendations are made")
+    st.markdown("• **Reference Guide**: Complete glossary for understanding the dashboard")
+    st.markdown("📊 **Example**: Use this tab to understand what each metric means and how thresholds are set")
+    
     # Create a compact layout with multiple columns
     col1, col2, col3 = st.columns(3)
     
@@ -2269,6 +2293,14 @@ def create_cannibalization_watchlist(df):
     # Create the watchlist table
     st.subheader("⚠️ Cannibalization Watchlist")
     st.markdown("*SKUs ranked by internal impact on brand owner portfolio*")
+    
+    # How to read this tab
+    st.markdown("**How to read**")
+    st.markdown("• **Cannibalization Ratio**: Percentage of volume taken from own portfolio")
+    st.markdown("• **Risk Levels**: 🔴 High (≥20%), 🟡 Medium (15-19%), 🟢 Low (<15%)")
+    st.markdown("• **Owner Impact**: Shows internal portfolio cannibalization effects")
+    st.markdown("• **Watchlist Order**: SKUs ranked by highest internal impact first")
+    st.markdown("📊 **Example**: SKU with 25% cannibalization means 25% of its volume comes from existing portfolio SKUs")
     
     # Summary metrics
     col1, col2, col3, col4 = st.columns(4)
@@ -2424,6 +2456,14 @@ def create_category_lift_table(df):
     # Create the category lift table
     st.subheader("📈 Category Lift Analysis")
     st.markdown("*SKUs ranked by category expansion potential - temper expectations on true market growth*")
+    
+    # How to read this tab
+    st.markdown("**How to read**")
+    st.markdown("• **Category Lift**: Additional volume generated from category growth")
+    st.markdown("• **Expansion Potential**: 🌊 High (≥6%), Moderate (4-5%), Low (2-3%), Minimal (<2%)")
+    st.markdown("• **True Growth**: Volume that doesn't come from competitors or own portfolio")
+    st.markdown("• **Market Expansion**: Shows potential for growing the overall category")
+    st.markdown("📊 **Example**: SKU with 5.2% category lift generates 5.2% additional volume from category growth")
     
     # Summary metrics
     col1, col2, col3, col4 = st.columns(4)
@@ -2803,6 +2843,21 @@ def create_small_multiples(df):
     st.subheader("📊 Small Multiples - Portfolio Comparison")
     st.markdown("*Identical micro-charts for each metric across all SKUs - perfect for side-by-side comparison*")
     
+    # How to read this tab
+    st.markdown("**How to read**")
+    st.markdown("• **Small Multiples**: Side-by-side comparison of all SKUs across key metrics")
+    st.markdown("• **Bar Height**: Metric value relative to standardized scale")
+    st.markdown("• **Color Coding**: 🟢 Green (top 25%), 🟠 Orange (above median), 🔴 Red (below median)")
+    st.markdown("• **Standardized Scales**: All charts use same scale for fair comparison")
+    st.markdown("📊 **Example**: Orange bar at ~65% height means above-median performance but not in top quartile")
+    
+    # Usage Tips
+    st.markdown("**Usage Tips:**")
+    st.markdown("• Compare heights across SKUs for each metric")
+    st.markdown("• Look for consistent patterns across metrics")
+    st.markdown("• Identify outliers and underperformers")
+    st.markdown("• Use for executive briefings and presentations")
+    
     # Define key metrics for small multiples
     metrics = [
         {'name': 'Brand_IV', 'title': 'Incremental Value', 'range': [0, 8], 'unit': '%', 'higher_better': True},
@@ -2910,24 +2965,6 @@ def create_small_multiples(df):
     comparison_df = pd.DataFrame(comparison_data)
     st.dataframe(comparison_df, use_container_width=True)
     
-    # Add interpretation guide
-    st.markdown("---")
-    st.subheader("📖 How to Read Small Multiples")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("**Color Coding:**")
-        st.markdown("🟢 **Green**: Top 25% performance")
-        st.markdown("🟠 **Orange**: Above median performance")
-        st.markdown("🔴 **Red**: Below median performance")
-    
-    with col2:
-        st.markdown("**Usage Tips:**")
-        st.markdown("• Compare heights across SKUs for each metric")
-        st.markdown("• Look for consistent patterns across metrics")
-        st.markdown("• Identify outliers and underperformers")
-        st.markdown("• Use for executive briefings and presentations")
 
 def create_hierarchical_table(df):
     html = '<style>.hierarchical-table{border-collapse:collapse;width:100%;font-family:Arial;font-size:10px;margin:10px 0}.hierarchical-table th,.hierarchical-table td{border:1px solid #ddd;padding:4px;text-align:center;vertical-align:middle}.hierarchical-table th{background-color:#f2f2f2;font-weight:bold}.top-header{background-color:#e6e6e6}.sub-header{background-color:#f8f8f8}.sku-cell{background-color:#f9f9f9;font-weight:bold;text-align:left}</style><table class="hierarchical-table"><tr><th rowspan="2" class="top-header sku-cell">SKU</th><th colspan="3" class="top-header">Brand</th><th colspan="3" class="top-header">Brand Owner</th><th colspan="6" class="top-header">Brand Source of Volume</th><th colspan="6" class="top-header">Brand Owner Source of Volume</th><th colspan="5" class="top-header">Mean Diversion Ratio</th><th rowspan="2" class="top-header">Market Concentration (Diversion HHI)</th></tr><tr><th class="sub-header">Incremental Value</th><th class="sub-header">Probability of Incremental Value</th><th class="sub-header">VaR10</th><th class="sub-header">Incremental Value</th><th class="sub-header">Probability of Incremental Value</th><th class="sub-header">VaR10</th><th class="sub-header">Capture Efficiency</th><th class="sub-header">Cannibalization ratio</th><th class="sub-header">Category Lift Ratio</th><th class="sub-header">Average Absolute Captured</th><th class="sub-header">Average Absolute Cannibalized</th><th class="sub-header">Average Absolute Category Lift</th><th class="sub-header">Capture Efficiency</th><th class="sub-header">Cannibalization ratio</th><th class="sub-header">Category Lift Ratio</th><th class="sub-header">Average Absolute Captured</th><th class="sub-header">Average Absolute Cannibalized</th><th class="sub-header">Average Absolute Category Lift</th><th class="sub-header">Competition</th><th class="sub-header">%</th><th class="sub-header">Competition</th><th class="sub-header">%</th><th class="sub-header">Competition</th></tr>'
@@ -2997,6 +3034,14 @@ def create_simple_decision_page(df):
     st.markdown("---")
     st.markdown("## 🎯 Simple Decision Page")
     st.markdown("*Clear recommendations for each SKU based on performance analysis*")
+    
+    # How to read this tab
+    st.markdown("**How to read**")
+    st.markdown("• **Launch/Pilot/Defer**: Clear recommendations for each SKU")
+    st.markdown("• **Decision Criteria**: Specific thresholds for each recommendation")
+    st.markdown("• **Confidence Levels**: How certain we are about each recommendation")
+    st.markdown("• **Next Steps**: Actionable guidance for immediate implementation")
+    st.markdown("📊 **Example**: SKUs in 'Launch Now' category meet all criteria and are ready for immediate market rollout")
     
     # Categorize SKUs based on action recommendations
     launch_now_skus = []
@@ -3335,7 +3380,7 @@ if not df.empty:
     
     # Create tabs with shorter names to fit all in one row
     tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12 = st.tabs([
-        "How to use the dashboard", "📈 Overview", "🗺️ Risk", "⚠️ Cannibal", "📈 Lift", "📊 Multiples", 
+        "How to", "📈 Overview", "🗺️ Risk", "⚠️ Cannibal", "📈 Lift", "📊 Multiples", 
         "🎯 Rivals", "📊 Compact", "📋 Executive", "🔍 Details", "📋 Reference", "🎯 Decision"
     ])
     
@@ -3346,6 +3391,14 @@ if not df.empty:
     with tab2:
         st.header("📈 Portfolio Leaderboard - SKU Level Analysis")
         st.markdown("*Showing both Brand and Owner perspectives for each SKU - sorted by composite score*")
+        
+        # How to read this tab
+        st.markdown("**How to read**")
+        st.markdown("• **SKU Ranking**: SKUs sorted by composite score (highest performance first)")
+        st.markdown("• **Dual Perspectives**: Each metric shows both Brand and Owner values for complete analysis")
+        st.markdown("• **Traffic Lights**: 🟢 Go, 🟡 Watch, 🔴 Hold indicate performance levels")
+        st.markdown("• **Action Recommendations**: Clear Launch/Pilot/Defer guidance with confidence levels")
+        st.markdown("📊 **Example**: SKU with 5.2% IV, 87% capture, 6.6% cannibal gets 'Launch with confidence' recommendation")
         
         # Top 5 Launch Callout
         create_top5_launch_callout(df_to_use)
@@ -3525,6 +3578,14 @@ if not df.empty:
         st.header(f"🗺️ Portfolio Risk Map {get_perspective_label()}")
         st.markdown("*Interactive risk analysis: VaR10 vs Incremental Value trade-offs*")
         
+        # How to read this tab
+        st.markdown("**How to read**")
+        st.markdown("• **X-axis (VaR10)**: Risk level (0-8%) - lower is better")
+        st.markdown("• **Y-axis (Incremental Value)**: Expected return (0-8%) - higher is better")
+        st.markdown("• **Point Size**: Capture efficiency (larger = better capture)")
+        st.markdown("• **Point Shape**: Launch recommendation (circle = launch, square = pilot, triangle = defer)")
+        st.markdown("📊 **Example**: Large circle in green zone = high IV, low risk, high capture = launch with confidence")
+        
         # Risk map explanation
         col1, col2, col3 = st.columns(3)
         with col1:
@@ -3582,6 +3643,14 @@ if not df.empty:
         st.header("📊 Compact View")
         st.markdown("*Space-efficient view with in-cell bars and short labels*")
         
+        # How to read this tab
+        st.markdown("**How to read**")
+        st.markdown("• **In-cell Bars**: Visual performance indicators within each cell")
+        st.markdown("• **Color Coding**: 🟢 Green (top 25%), 🟠 Orange (above median), 🔴 Red (below median)")
+        st.markdown("• **Compact Format**: All key metrics in space-efficient layout")
+        st.markdown("• **Quick Comparison**: Easy side-by-side SKU comparison")
+        st.markdown("📊 **Example**: '████████   Above Median' means performance is above portfolio median but not in top 25%")
+        
         # Call the compact summary cards function
         create_compact_summary_cards(df_to_use)
         
@@ -3596,6 +3665,15 @@ if not df.empty:
     
     with tab10:
         st.header("🔍 Complete Data View")
+        
+        # How to read this tab
+        st.markdown("**How to read**")
+        st.markdown("• **Complete Dataset**: All SKUs with all available metrics")
+        st.markdown("• **Hierarchical Structure**: Organized by performance tiers and risk levels")
+        st.markdown("• **Raw Data Access**: Full numerical values for detailed analysis")
+        st.markdown("• **Portfolio Statistics**: Summary metrics at the bottom")
+        st.markdown("📊 **Example**: Use this view for detailed analysis, export data, or deep-dive into specific metrics")
+        
         st.markdown(create_hierarchical_table(df_to_use), unsafe_allow_html=True)
         
         st.markdown("---")

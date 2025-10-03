@@ -1141,6 +1141,27 @@ def create_executive_booklet(df):
     st.markdown("• **Action Items**: Clear recommendations for next steps")
     st.markdown("📊 **Example**: Use this view for executive presentations and strategic planning")
     
+    # Key insights
+    st.markdown("### 💡 KEY INSIGHTS")
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("**🎯 Performance Highlights**")
+        best_iv = df.loc[df['Brand_IV'].idxmax()]
+        st.caption(f"• Highest IV: {best_iv['SKU']} ({best_iv['Brand_IV']:.1f}%)")
+        
+        best_capture = df.loc[df['Brand_Capture_Eff'].idxmax()]
+        st.caption(f"• Best Capture: {best_capture['SKU']} ({best_capture['Brand_Capture_Eff']:.1f}%)")
+        
+        lowest_cannibal = df.loc[df['Brand_Cannibal_Ratio'].idxmin()]
+        st.caption(f"• Lowest Cannibal: {lowest_cannibal['SKU']} ({lowest_cannibal['Brand_Cannibal_Ratio']:.1f}%)")
+    
+    with col2:
+        st.markdown("**📊 Portfolio Health**")
+        st.caption(f"• {len(df[df['Composite_Score'] >= 80])} high-performing SKUs")
+        st.caption(f"• {len(df[df['Brand_IV'] >= 5])} SKUs with strong IV")
+        st.caption(f"• {len(df[df['Brand_Cannibal_Ratio'] <= 10])} SKUs with low cannibalization")
+    
     # Page selector
     page = st.radio(
         "📄 Select Page:",
@@ -1692,27 +1713,6 @@ def create_executive_page1_leaderboard(df):
         
         st.markdown("---")
     
-    # Quick insights
-    st.markdown("### 💡 KEY INSIGHTS")
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("**🎯 Performance Highlights**")
-        best_iv = df.loc[df['Brand_IV'].idxmax()]
-        st.caption(f"• Highest IV: {best_iv['SKU']} ({best_iv['Brand_IV']:.1f}%)")
-        
-        best_capture = df.loc[df['Brand_Capture_Eff'].idxmax()]
-        st.caption(f"• Best Capture: {best_capture['SKU']} ({best_capture['Brand_Capture_Eff']:.1f}%)")
-        
-        lowest_cannibal = df.loc[df['Brand_Cannibal_Ratio'].idxmin()]
-        st.caption(f"• Lowest Cannibal: {lowest_cannibal['SKU']} ({lowest_cannibal['Brand_Cannibal_Ratio']:.1f}%)")
-    
-    with col2:
-        st.markdown("**📊 Portfolio Health**")
-        st.caption(f"• {len(df[df['Composite_Score'] >= 80])} high-performing SKUs")
-        st.caption(f"• {len(df[df['Brand_IV'] >= 5])} SKUs with strong IV")
-        st.caption(f"• {len(df[df['Brand_Cannibal_Ratio'] <= 10])} SKUs with low cannibalization")
-    
     # Navigation
     st.markdown("---")
 
@@ -2002,6 +2002,42 @@ def create_closest_rivals_widget(df):
     # Display top 10 competitors
     top_competitors = sorted_competitors[:10]
     
+    # Competitive messaging recommendations
+    st.markdown("#### 🎯 Competitive Messaging Recommendations")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("**🎯 Primary Messaging**")
+        if top_competitors:
+            primary = top_competitors[0]
+            st.caption(f"Focus on **{primary[0]}**")
+            st.caption(f"• Highlight superior value proposition")
+            st.caption(f"• Address {primary[0]}'s weaknesses")
+            st.caption(f"• Target {primary[1]['sku_count']} affected SKUs")
+    
+    with col2:
+        st.markdown("**📢 Secondary Messaging**")
+        if len(top_competitors) > 1:
+            secondary = top_competitors[1]
+            st.caption(f"Address **{secondary[0]}**")
+            st.caption(f"• Differentiate on key attributes")
+            st.caption(f"• Emphasize unique benefits")
+            st.caption(f"• Target {secondary[1]['sku_count']} affected SKUs")
+        else:
+            st.caption("No secondary competitor identified")
+    
+    with col3:
+        st.markdown("**📊 Portfolio Strategy**")
+        total_affected_skus = sum(data['sku_count'] for _, data in top_competitors)
+        st.caption(f"**{total_affected_skus}** SKUs face competition")
+        st.caption("• Coordinate messaging across portfolio")
+        st.caption("• Avoid cannibalization between SKUs")
+        st.caption("• Leverage brand owner strength")
+    
+    # Assumption note
+    st.caption("📝 **Assumption**: Competitor analysis based on diversion ratios from market research. Messaging recommendations assume competitive positioning opportunities exist.")
+    
     if top_competitors:
         col1, col2 = st.columns([2, 1])
         
@@ -2084,41 +2120,6 @@ def create_closest_rivals_widget(df):
                 else:
                     st.success("✅ **Low Competitive Intensity** - Standard messaging sufficient")
         
-        # Competitive messaging recommendations
-        st.markdown("#### 🎯 Competitive Messaging Recommendations")
-        
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            st.markdown("**🎯 Primary Messaging**")
-            if top_competitors:
-                primary = top_competitors[0]
-                st.caption(f"Focus on **{primary[0]}**")
-                st.caption(f"• Highlight superior value proposition")
-                st.caption(f"• Address {primary[0]}'s weaknesses")
-                st.caption(f"• Target {primary[1]['sku_count']} affected SKUs")
-        
-        with col2:
-            st.markdown("**📢 Secondary Messaging**")
-            if len(top_competitors) > 1:
-                secondary = top_competitors[1]
-                st.caption(f"Address **{secondary[0]}**")
-                st.caption(f"• Differentiate on key attributes")
-                st.caption(f"• Emphasize unique benefits")
-                st.caption(f"• Target {secondary[1]['sku_count']} affected SKUs")
-            else:
-                st.caption("No secondary competitor identified")
-        
-        with col3:
-            st.markdown("**📊 Portfolio Strategy**")
-            total_affected_skus = sum(data['sku_count'] for _, data in top_competitors)
-            st.caption(f"**{total_affected_skus}** SKUs face competition")
-            st.caption("• Coordinate messaging across portfolio")
-            st.caption("• Avoid cannibalization between SKUs")
-            st.caption("• Leverage brand owner strength")
-        
-        # Assumption note
-        st.caption("📝 **Assumption**: Competitor analysis based on diversion ratios from market research. Messaging recommendations assume competitive positioning opportunities exist.")
     
     else:
         st.warning("⚠️ No competitor data available for analysis")
@@ -2465,6 +2466,44 @@ def create_category_lift_table(df):
     st.markdown("• **Market Expansion**: Shows potential for growing the overall category")
     st.markdown("📊 **Example**: SKU with 5.2% category lift generates 5.2% additional volume from category growth")
     
+    # Portfolio insights
+    st.markdown("---")
+    st.subheader("📋 Portfolio Category Expansion Insights")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("**Expansion Distribution:**")
+        high_expansion = len(df[df['Brand_Category_Lift'] >= 6])
+        moderate_expansion = len(df[(df['Brand_Category_Lift'] >= 4) & (df['Brand_Category_Lift'] < 6)])
+        low_expansion = len(df[(df['Brand_Category_Lift'] >= 2) & (df['Brand_Category_Lift'] < 4)])
+        minimal_expansion = len(df[df['Brand_Category_Lift'] < 2])
+        
+        st.write(f"🚀 High Expansion (≥6%): {high_expansion} SKUs")
+        st.write(f"📈 Moderate Expansion (4-6%): {moderate_expansion} SKUs")
+        st.write(f"📊 Low Expansion (2-4%): {low_expansion} SKUs")
+        st.write(f"⚠️ Minimal Expansion (<2%): {minimal_expansion} SKUs")
+    
+    with col2:
+        st.markdown("**Key Insights:**")
+        avg_lift = df['Brand_Category_Lift'].mean()
+        avg_cannibal = df['Brand_Cannibal_Ratio'].mean()
+        
+        if avg_lift > avg_cannibal:
+            st.success(f"✅ Portfolio shows net expansion potential (+{avg_lift-avg_cannibal:.1f}%)")
+        else:
+            st.warning(f"⚠️ Portfolio shows net cannibalization risk ({avg_cannibal-avg_lift:.1f}%)")
+        
+        st.write(f"📊 Average category lift: {avg_lift:.1f}%")
+        st.write(f"📊 Average cannibalization: {avg_cannibal:.1f}%")
+        
+        # Top expansion opportunity
+        top_lift_sku = df.loc[df['Brand_Category_Lift'].idxmax()]
+        st.write(f"🎯 Best expansion opportunity: {top_lift_sku['SKU']} ({top_lift_sku['Brand_Category_Lift']:.1f}%)")
+        
+        # Add assumption note
+        st.caption(get_assumption_note('category_lift'))
+    
     # Summary metrics
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -2652,43 +2691,6 @@ def create_category_lift_table(df):
                 for factor in sensitivity_factors:
                     st.caption(factor)
     
-    # Portfolio insights
-    st.markdown("---")
-    st.subheader("📋 Portfolio Category Expansion Insights")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("**Expansion Distribution:**")
-        high_expansion = len(df[df['Brand_Category_Lift'] >= 6])
-        moderate_expansion = len(df[(df['Brand_Category_Lift'] >= 4) & (df['Brand_Category_Lift'] < 6)])
-        low_expansion = len(df[(df['Brand_Category_Lift'] >= 2) & (df['Brand_Category_Lift'] < 4)])
-        minimal_expansion = len(df[df['Brand_Category_Lift'] < 2])
-        
-        st.write(f"🚀 High Expansion (≥6%): {high_expansion} SKUs")
-        st.write(f"📈 Moderate Expansion (4-6%): {moderate_expansion} SKUs")
-        st.write(f"📊 Low Expansion (2-4%): {low_expansion} SKUs")
-        st.write(f"⚠️ Minimal Expansion (<2%): {minimal_expansion} SKUs")
-    
-    with col2:
-        st.markdown("**Key Insights:**")
-        avg_lift = df['Brand_Category_Lift'].mean()
-        avg_cannibal = df['Brand_Cannibal_Ratio'].mean()
-        
-        if avg_lift > avg_cannibal:
-            st.success(f"✅ Portfolio shows net expansion potential (+{avg_lift-avg_cannibal:.1f}%)")
-        else:
-            st.warning(f"⚠️ Portfolio shows net cannibalization risk ({avg_cannibal-avg_lift:.1f}%)")
-        
-        st.write(f"📊 Average category lift: {avg_lift:.1f}%")
-        st.write(f"📊 Average cannibalization: {avg_cannibal:.1f}%")
-        
-        # Top expansion opportunity
-        top_lift_sku = df.loc[df['Brand_Category_Lift'].idxmax()]
-        st.write(f"🎯 Best expansion opportunity: {top_lift_sku['SKU']} ({top_lift_sku['Brand_Category_Lift']:.1f}%)")
-        
-        # Add assumption note
-        st.caption(get_assumption_note('category_lift'))
 
 def create_kpi_strip(df):
     """
@@ -3586,22 +3588,6 @@ if not df.empty:
         st.markdown("• **Point Shape**: Launch recommendation (circle = launch, square = pilot, triangle = defer)")
         st.markdown("📊 **Example**: Large circle in green zone = high IV, low risk, high capture = launch with confidence")
         
-        # Risk map explanation
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.info("🟢 **Green Zone**: Low Risk, High Return - Launch with confidence")
-        with col2:
-            st.warning("🟠 **Orange Zone**: Medium Risk - Monitor closely")
-        with col3:
-            st.error("🔴 **Red Zone**: High Risk - Consider pilot testing")
-        
-        # Create and display risk map
-        risk_map = create_portfolio_risk_map(df_to_use)
-        st.plotly_chart(risk_map, use_container_width=True)
-        
-        # Add assumption note
-        st.caption(get_assumption_note('risk_map'))
-        
         # Risk analysis summary
         st.subheader("📊 Risk Analysis Summary")
         
@@ -3622,6 +3608,23 @@ if not df.empty:
         with col4:
             delta_pct = f"{high_risk/len(df_to_use)*100:.0f}%" if len(df_to_use) > 0 else "0%"
             st.metric("High Risk", high_risk, delta=delta_pct)
+        
+        # Risk map explanation
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.info("🟢 **Green Zone**: Low Risk, High Return - Launch with confidence")
+        with col2:
+            st.warning("🟠 **Orange Zone**: Medium Risk - Monitor closely")
+        with col3:
+            st.error("🔴 **Red Zone**: High Risk - Consider pilot testing")
+        
+        # Create and display risk map
+        risk_map = create_portfolio_risk_map(df_to_use)
+        st.plotly_chart(risk_map, use_container_width=True)
+        
+        # Add assumption note
+        st.caption(get_assumption_note('risk_map'))
+        
     
     with tab4:
         # Call the cannibalization watchlist function (has its own header)
